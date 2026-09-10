@@ -32,13 +32,17 @@
 .hero__scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 249, 247, 0.34) 0%,
-    rgba(255, 249, 247, 0) 26%,
-    rgba(255, 249, 247, 0) 68%,
-    rgba(255, 249, 247, 0.42) 100%
-  );
+  background:
+    /* Softens the photograph behind the display type and tagline. */
+    linear-gradient(
+      180deg,
+      rgba(255, 249, 247, 0.4) 0%,
+      rgba(255, 249, 247, 0.26) 22%,
+      rgba(255, 249, 247, 0.52) 46%,
+      rgba(255, 249, 247, 0.58) 62%,
+      rgba(255, 249, 247, 0.3) 82%,
+      rgba(255, 249, 247, 0.46) 100%
+    );
   pointer-events: none;
 }
 
@@ -100,7 +104,7 @@
   font-size: clamp(1.15rem, 1.8vw, 1.7rem);
   font-weight: 300;
   font-style: italic;
-  color: var(--muted-ink);
+  color: var(--ink);
   opacity: 0;
   max-width: 22ch;
 }
@@ -218,6 +222,7 @@
   .hero__tagline {
     margin-top: 1.25rem;
     max-width: 18ch;
+    color: var(--muted-ink);
   }
 
   .hero__foot {

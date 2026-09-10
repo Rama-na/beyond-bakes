@@ -5,28 +5,32 @@ This is the list of what is currently **sample copy** and what is still **missin
 
 ---
 
-## 1. Photographs — MISSING (blocks launch)
+## 1. Photographs — mostly supplied
 
-The four cake photographs and the two portraits are **not in the repository**. They
-came through as inline images in the brief rather than as files, so they could not be
-saved.
-
-Drop them into `public/images/` with exactly these filenames:
+In place under `public/images/`:
 
 | File | What it is |
 | --- | --- |
-| `signature-red-rose-cake.jpg` | Three-tier ivory cake with deep red garden roses. Used as the **hero**. |
+| `signature-red-rose-cake.jpg` | Three-tier ivory cake with red garden roses. Used as the **hero**. |
 | `signature-art-cake.jpg` | Pastel palette-knife cake with cakesicles, waffle cone, cocoa spheres. |
 | `garden-floral-cake.jpg` | Pressed-flower tiered cake, close-up. |
 | `floral-event-cake.jpg` | The full floral celebration setup with the white arched plinth. |
-| `portrait-girvani.jpg` | Portrait of Girvani (4:5 crop works best). |
-| `portrait-swapna.jpg` | Portrait of Swapna (4:5 crop works best). |
+| `portrait-girvani.jpg` | Portrait of Girvani. |
 
-Until they are added, each frame shows a blush placeholder naming the file it needs —
-the layout is already correct, so nothing shifts when the real images land.
+**Still needed:** `portrait-swapna.jpg` — a 4:5 crop, ideally shot and styled to
+match Girvani's so the two founder cards sit together. Until then that frame
+shows a placeholder; nothing shifts when it arrives.
 
-**Sizing:** export at roughly 1600px on the long edge. Anything larger is wasted on a
-phone. See "Image optimisation" in `README.md`.
+### Two things worth a decision
+
+- **The same four cake photographs carry the whole page.** With four images
+  across the hero, four signature cards, four craft sections and the Instagram
+  grid, each one appears three or four times — the red-rose cake most visibly.
+  More photographs would fix this immediately; the data layer needs no changes,
+  just new filenames in `bakes.ts` / `craft.ts` / `socialGallery.ts`.
+- **The red-rose cake carries a "Durai ♥ Monisha" topper.** That is real
+  commissioned work, which is fine to show — but as the hero it means the first
+  words on the site are another couple's names. Worth a look before launch.
 
 ---
 
