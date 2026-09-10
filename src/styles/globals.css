@@ -1,0 +1,359 @@
+/* ============================================================
+   BeyondBakes — global styles
+   Editorial pastry atelier. Warm white, restrained blush,
+   serif for emotion, sans for everything functional.
+   ============================================================ */
+
+/* ---------- 1. Tokens ---------- */
+
+:root {
+  /* Palette */
+  --background: #fff9f7;
+  --surface: #ffffff;
+  --blush: #f4dde2;
+  --blush-deep: #eccdd5;
+  --pink: #d99aa9;
+  --deep-pink: #b65f78;
+  --ink: #332127;
+  --muted-ink: #7b666d;
+  --line: rgba(51, 33, 39, 0.14);
+  --line-soft: rgba(51, 33, 39, 0.07);
+
+  /* Type */
+  --font-display: 'Cormorant Garamond', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-sans: 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --step-hero: clamp(3.8rem, 13vw, 11rem);
+  --step-display: clamp(2.75rem, 7vw, 7rem);
+  --step-title: clamp(2rem, 4vw, 3.5rem);
+  --step-lede: clamp(1.25rem, 2.1vw, 1.85rem);
+  --step-body: clamp(1rem, 1.05vw, 1.15rem);
+  --step-micro: clamp(0.68rem, 0.8vw, 0.78rem);
+
+  /* Space */
+  --gutter: clamp(1.25rem, 5vw, 5rem);
+  --section-y: clamp(6rem, 14vh, 12rem);
+  --measure: 62ch;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur: 640ms;
+
+  --header-h: 84px;
+}
+
+/* ---------- 2. Reset ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: auto; /* Lenis owns scrolling */
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+body {
+  background: var(--background);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--step-body);
+  line-height: 1.65;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  /* Background shifts between warm white and blush as sections pass */
+  transition: background-color 900ms var(--ease-soft);
+}
+
+img,
+picture,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Visible, on-brand focus. Never removed. */
+:focus-visible {
+  outline: 2px solid var(--deep-pink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--blush);
+  color: var(--ink);
+}
+
+/* ---------- 3. Typographic primitives ---------- */
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.micro {
+  font-size: var(--step-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 600;
+  color: var(--muted-ink);
+}
+
+.lede {
+  font-size: var(--step-lede);
+  line-height: 1.5;
+  font-weight: 300;
+  max-width: var(--measure);
+  color: var(--ink);
+}
+
+.body-muted {
+  color: var(--muted-ink);
+  max-width: var(--measure);
+}
+
+/* ---------- 4. Layout ---------- */
+
+.shell {
+  width: 100%;
+  max-width: 1680px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-y);
+  position: relative;
+}
+
+.rule {
+  height: 1px;
+  background: var(--line-soft);
+  border: 0;
+  width: 100%;
+}
+
+/* Screen-reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -140%);
+  z-index: 200;
+  background: var(--ink);
+  color: var(--background);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 200ms var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  transform: translate(-50%, 0.5rem);
+}
+
+/* ---------- 5. Buttons ---------- */
+
+.btn {
+  --btn-fg: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+  color: var(--btn-fg);
+  padding: 1.1rem 1.9rem;
+  min-height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color 420ms var(--ease-soft),
+    border-color 420ms var(--ease-soft);
+}
+
+/* The wash that fills from the bottom on hover */
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform: translateY(101%);
+  transition: transform 560ms var(--ease-out);
+  z-index: -1;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  color: var(--background);
+  border-color: var(--ink);
+}
+
+.btn:hover::before,
+.btn:focus-visible::before {
+  transform: translateY(0);
+}
+
+.btn .btn-arrow {
+  transition: transform 460ms var(--ease-out);
+}
+
+.btn:hover .btn-arrow,
+.btn:focus-visible .btn-arrow {
+  transform: translateX(4px);
+}
+
+.btn--solid {
+  background: var(--ink);
+  color: var(--background);
+  border-color: var(--ink);
+}
+
+.btn--solid::before {
+  background: var(--deep-pink);
+}
+
+.btn--solid:hover,
+.btn--solid:focus-visible {
+  color: var(--background);
+  border-color: var(--deep-pink);
+}
+
+.btn--ghost {
+  border-color: transparent;
+  padding-inline: 0;
+}
+
+.btn--ghost::before {
+  display: none;
+}
+
+/* Understated text link with an underline that grows */
+.link-underline {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 2px;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 500ms var(--ease-out);
+}
+
+.link-underline:hover::after,
+.link-underline:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ---------- 6. Media ---------- */
+
+.figure {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(150deg, var(--blush) 0%, var(--blush-deep) 100%);
+}
+
+.figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Photographs fade up as they decode instead of snapping in */
+  opacity: 0;
+  transition: opacity 900ms var(--ease-soft);
+}
+
+.figure img[data-loaded='true'] {
+  opacity: 1;
+}
+
+/* ---------- 7. Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .figure img {
+    opacity: 1;
+  }
+}

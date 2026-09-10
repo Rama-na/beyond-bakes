@@ -1,0 +1,215 @@
+.detail {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: grid;
+  place-items: center;
+}
+
+.detail__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(51, 33, 39, 0.42);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: detailFade 460ms var(--ease-soft);
+  cursor: default;
+}
+
+.detail__panel {
+  position: relative;
+  width: min(1360px, 100vw);
+  height: min(94svh, 100svh);
+  background: var(--background);
+  overflow: hidden;
+  animation: detailRise 560ms var(--ease-out);
+}
+
+.detail__close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 3;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  background: var(--background);
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-size: 0.9rem;
+  transition:
+    background-color 400ms var(--ease-soft),
+    color 400ms var(--ease-soft);
+}
+
+.detail__close:hover,
+.detail__close:focus-visible {
+  background: var(--ink);
+  color: var(--background);
+}
+
+.detail__scroll {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.detail__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 100%;
+}
+
+.detail__media {
+  position: relative;
+  min-height: 46svh;
+}
+
+.detail__media .figure {
+  height: 100%;
+}
+
+/* The photograph holds its own column while the copy scrolls beside it. */
+@media (min-width: 901px) {
+  .detail__media {
+    position: sticky;
+    top: 0;
+    height: min(94svh, 100svh);
+  }
+}
+
+.detail__body {
+  padding: clamp(2.5rem, 5vw, 5rem) clamp(1.5rem, 4vw, 4.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-self: center;
+}
+
+.detail__title {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 300;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+
+.detail__desc {
+  font-size: clamp(1.05rem, 1.3vw, 1.3rem);
+  color: var(--muted-ink);
+}
+
+.detail__block {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.detail__block p {
+  font-size: 0.95rem;
+  color: var(--muted-ink);
+  max-width: 46ch;
+}
+
+.detail__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.detail__list li {
+  position: relative;
+  padding-left: 1.25rem;
+  font-size: 0.95rem;
+  color: var(--muted-ink);
+  line-height: 1.6;
+  max-width: 48ch;
+}
+
+.detail__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--pink);
+}
+
+.detail__sizes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail__sizes li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 0.95rem;
+}
+
+.detail__serves {
+  color: var(--muted-ink);
+  font-size: 0.85rem;
+}
+
+.detail__lead {
+  font-size: 0.85rem;
+  color: var(--deep-pink);
+  font-style: italic;
+}
+
+.detail__cta {
+  margin-top: 0.75rem;
+}
+
+@keyframes detailFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes detailRise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---- Mobile: a page-like sheet ---- */
+
+@media (max-width: 900px) {
+  .detail__panel {
+    width: 100vw;
+    height: 100svh;
+  }
+
+  .detail__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail__media {
+    aspect-ratio: 4 / 5;
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail__backdrop,
+  .detail__panel {
+    animation: none;
+  }
+}

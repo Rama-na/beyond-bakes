@@ -1,0 +1,41 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  pointer-events: none;
+  width: 84px;
+  height: 84px;
+  margin: -42px 0 0 -42px;
+  border-radius: 999px;
+  background: var(--deep-pink);
+  color: var(--background);
+  display: grid;
+  place-items: center;
+  transform: scale(0);
+  transition: transform 460ms var(--ease-out);
+  will-change: transform;
+}
+
+.cursor[data-active='true'] {
+  transform: scale(1);
+}
+
+.cursor__label {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 300ms var(--ease-soft) 120ms;
+}
+
+.cursor[data-active='true'] .cursor__label {
+  opacity: 1;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor {
+    display: none;
+  }
+}

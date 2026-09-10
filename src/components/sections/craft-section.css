@@ -1,0 +1,96 @@
+.craft__head {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 60rem;
+  margin-bottom: clamp(4rem, 10vw, 9rem);
+}
+
+.craft__headline {
+  font-size: var(--step-display);
+  font-weight: 300;
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+}
+
+.craft__headline .reveal-line:last-child .reveal-line__inner {
+  font-style: italic;
+  color: var(--deep-pink);
+}
+
+.craft__standfirst {
+  opacity: 0;
+}
+
+.craft__rows {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4rem, 8vw, 7rem);
+}
+
+.craft__row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: center;
+}
+
+/* Alternate the photograph left/right so the page keeps a rhythm. */
+.craft__row[data-flip='true'] {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+}
+
+.craft__row[data-flip='true'] .craft__frame {
+  order: 2;
+}
+
+.craft__frame {
+  position: relative;
+  overflow: hidden;
+  will-change: clip-path;
+  max-width: 460px;
+  justify-self: center;
+  width: 100%;
+}
+
+.craft__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.craft__label {
+  color: var(--pink);
+  opacity: 0;
+}
+
+.craft__word {
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  opacity: 0;
+}
+
+.craft__body {
+  font-size: clamp(1rem, 1.1vw, 1.1rem);
+  opacity: 0;
+  max-width: 46ch;
+}
+
+@media (max-width: 860px) {
+  .craft__row,
+  .craft__row[data-flip='true'] {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* Photograph always leads on mobile — the word reads as its caption. */
+  .craft__row[data-flip='true'] .craft__frame {
+    order: 0;
+  }
+
+  .craft__frame {
+    max-width: 420px;
+  }
+}

@@ -1,0 +1,16 @@
+.reveal-text {
+  display: block;
+}
+
+.reveal-line {
+  display: block;
+  overflow: hidden;
+  /* Descenders need headroom or the mask clips them mid-reveal. */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.reveal-line__inner {
+  display: block;
+  will-change: transform;
+}
