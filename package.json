@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "oxlint",
-    "preview": "vite preview"
+    "build": "node scripts/check-css.mjs && tsc -b && vite build",
+    "lint": "oxlint && node scripts/check-css.mjs",
+    "preview": "vite preview",
+    "check:css": "node scripts/check-css.mjs"
   },
   "dependencies": {
     "gsap": "^3.15.0",

@@ -1,32 +1,15 @@
 .sigs {
   position: relative;
-  background: var(--background);
+  z-index: 1;
+  overflow-x: clip;
 }
 
-/* ============ Pinned horizontal mode (desktop) ============ */
-
-.sigs[data-mode='pinned'] .sigs__viewport {
-  height: 100svh;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-}
-
-.sigs[data-mode='pinned'] .sigs__track {
-  display: flex;
-  align-items: center;
-  gap: clamp(2rem, 4vw, 4.5rem);
-  padding-inline: var(--gutter);
-  will-change: transform;
-}
-
-.sigs__intro {
-  flex: 0 0 auto;
-  width: min(38vw, 480px);
-  padding-right: clamp(1rem, 3vw, 3rem);
+.sigs__head {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
+  max-width: 42rem;
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
 }
 
 .sigs__headline {
@@ -43,173 +26,5 @@
 
 .sigs__note {
   font-size: 0.95rem;
-}
-
-.sigs__hint {
   margin-top: 0.5rem;
-  color: var(--deep-pink);
-}
-
-/* ---- Card ---- */
-
-.sig-card {
-  flex: 0 0 auto;
-  width: clamp(300px, 30vw, 440px);
-}
-
-.sig-card__hit {
-  display: block;
-  width: 100%;
-  text-align: left;
-}
-
-.sig-card__frame {
-  display: block;
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 4 / 5;
-  margin-bottom: 1.5rem;
-}
-
-.sig-card__frame .figure {
-  transition: transform 900ms var(--ease-out);
-  height: 100%;
-}
-
-.sig-card__meta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  transition: transform 620ms var(--ease-out);
-}
-
-.sig-card__index {
-  color: var(--pink);
-}
-
-.sig-card__title {
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 2.4vw, 2.5rem);
-  font-weight: 300;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  display: block;
-}
-
-.sig-card__desc {
-  color: var(--muted-ink);
-  font-size: 0.92rem;
-  line-height: 1.6;
-  max-width: 34ch;
-  display: block;
-}
-
-.sig-card__more {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--deep-pink);
-  margin-top: 0.35rem;
-}
-
-.sig-card__arrow {
-  transition: transform 460ms var(--ease-out);
-}
-
-/* Hover is an enhancement only — never the sole route to information. */
-@media (hover: hover) and (pointer: fine) {
-  .sig-card__hit:hover .sig-card__frame .figure,
-  .sig-card__hit:focus-visible .sig-card__frame .figure {
-    transform: scale(1.035);
-  }
-
-  .sig-card__hit:hover .sig-card__meta,
-  .sig-card__hit:focus-visible .sig-card__meta {
-    transform: translateX(6px);
-  }
-
-  .sig-card__hit:hover .sig-card__arrow,
-  .sig-card__hit:focus-visible .sig-card__arrow {
-    transform: translateX(5px);
-  }
-}
-
-/* ---- Progress rail ---- */
-
-.sigs__progress {
-  position: absolute;
-  bottom: clamp(2rem, 5vh, 3.5rem);
-  left: var(--gutter);
-  right: var(--gutter);
-  height: 1px;
-  background: var(--line-soft);
-}
-
-.sigs__progress-bar {
-  display: block;
-  height: 100%;
-  background: var(--deep-pink);
-  transform: scaleX(0);
-  transform-origin: left;
-}
-
-/* ============ Swipe rail mode (mobile / reduced motion) ============ */
-
-.sigs[data-mode='rail'] {
-  padding-block: var(--section-y);
-}
-
-.sigs[data-mode='rail'] .sigs__viewport {
-  overflow: visible;
-}
-
-.sigs[data-mode='rail'] .sigs__track {
-  display: flex;
-  gap: 1.5rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding-inline: var(--gutter);
-  /* Room for the focus ring, which would otherwise clip against the edge. */
-  padding-block: 0.5rem;
-  scrollbar-width: none;
-}
-
-.sigs[data-mode='rail'] .sigs__track::-webkit-scrollbar {
-  display: none;
-}
-
-/* The intro is a normal block above the rail, not a slide inside it. */
-.sigs__intro-block {
-  margin-bottom: clamp(2.5rem, 6vw, 3.5rem);
-}
-
-.sigs[data-mode='rail'] .sigs__intro {
-  width: 100%;
-  max-width: 34rem;
-  padding-right: 0;
-}
-
-.sigs[data-mode='rail'] .sig-card {
-  width: min(78vw, 340px);
-  scroll-snap-align: center;
-}
-
-/* On narrow screens the intro sits above the rail instead of inside it. */
-@media (max-width: 900px) {
-  .sigs[data-mode='rail'] .sigs__track {
-    flex-wrap: nowrap;
-  }
-
-  .sigs__hint {
-    color: var(--deep-pink);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sig-card__frame .figure,
-  .sig-card__meta,
-  .sig-card__arrow {
-    transition: none;
-  }
 }

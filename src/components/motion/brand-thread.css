@@ -1,0 +1,50 @@
+.thread {
+  position: absolute;
+  inset: 0;
+  /* Behind every section, above the page ground. */
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.thread__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.thread__line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* The viewBox is stretched hard over the page; without this the line would
+     be squashed to nothing horizontally. */
+  vector-effect: non-scaling-stroke;
+}
+
+.thread__line--over {
+  stroke: var(--pink);
+  stroke-width: 1.15;
+  opacity: 0.5;
+}
+
+.thread__line--under {
+  stroke: var(--blush);
+  stroke-width: 4;
+  opacity: 0.45;
+}
+
+/* The line is decorative; on a small screen it competes with the content it is
+   meant to connect, so it thins out rather than disappearing entirely. */
+@media (max-width: 720px) {
+  .thread__line--over {
+    stroke-width: 1;
+    opacity: 0.38;
+  }
+
+  .thread__line--under {
+    stroke-width: 2.25;
+    opacity: 0.3;
+  }
+}

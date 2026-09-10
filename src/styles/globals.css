@@ -7,17 +7,29 @@
 /* ---------- 1. Tokens ---------- */
 
 :root {
-  /* Palette */
-  --background: #fff9f7;
-  --surface: #ffffff;
-  --blush: #f4dde2;
-  --blush-deep: #eccdd5;
-  --pink: #d99aa9;
-  --deep-pink: #b65f78;
-  --ink: #332127;
-  --muted-ink: #7b666d;
-  --line: rgba(51, 33, 39, 0.14);
-  --line-soft: rgba(51, 33, 39, 0.07);
+  /* ---- Palette ----
+     Deliberately cream-led, roughly 80% cream/white, 15% blush,
+     5% deep rose and gold. The site is not pink; pink is the accent that
+     lets the photography and the portraits carry the colour. */
+  --cream: #fffdf9;
+  --white: #ffffff;
+  --blush: #f7d9dd;
+  --blush-deep: #f0c9d0;
+  --pink: #e8a7b0;
+  --deep-rose: #a95c69;
+  --gold: #b89a62;
+  --ink: #252124;
+  --muted: #74696c;
+
+  /* Names used throughout the components, mapped onto the palette above so
+     the tokens stay in one place. */
+  --background: var(--cream);
+  --surface: var(--white);
+  --deep-pink: var(--deep-rose);
+  --muted-ink: var(--muted);
+
+  --line: rgba(37, 33, 36, 0.13);
+  --line-soft: rgba(37, 33, 36, 0.06);
 
   /* Type */
   --font-display: 'Cormorant Garamond', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
@@ -162,6 +174,19 @@ a {
 }
 
 /* ---------- 4. Layout ---------- */
+
+/* The thread is absolutely positioned over the whole page and painted first;
+   `.page__content` sits above it in DOM order, so the line passes behind the
+   sections and shows through wherever they are transparent. */
+.page {
+  position: relative;
+}
+
+.page__content {
+  position: relative;
+  z-index: 1;
+}
+
 
 .shell {
   width: 100%;

@@ -99,11 +99,11 @@ export function Hero({ ready }: HeroProps) {
     <section className="hero" ref={root} id="top">
       <div className="hero__frame">
         <Figure
-          src="/images/signature-red-rose-cake.jpg"
-          alt="A three-tier ivory buttercream cake dressed with deep red garden roses"
+          src="/images/signature-art-cake.jpg"
+          alt="A pastel palette-knife cake finished with cakesicles, a waffle cone and cocoa spheres"
           objectPosition="50% 42%"
           priority
-          placeholderLabel="Hero photograph — add signature-red-rose-cake.jpg"
+          placeholderLabel="Hero photograph — add signature-art-cake.jpg"
           placeholderAlign="bottom"
         />
         <div className="hero__scrim" aria-hidden="true" />

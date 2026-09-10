@@ -17,9 +17,9 @@ In place under `public/images/`:
 | `floral-event-cake.jpg` | The full floral celebration setup with the white arched plinth. |
 | `portrait-girvani.jpg` | Portrait of Girvani. |
 
-**Still needed:** `portrait-swapna.jpg` — a 4:5 crop, ideally shot and styled to
-match Girvani's so the two founder cards sit together. Until then that frame
-shows a placeholder; nothing shifts when it arrives.
+| `portrait-swapna.jpg` | Portrait of Swapna. |
+
+All six are in place. Nothing is missing.
 
 ### Two things worth a decision
 
@@ -29,8 +29,9 @@ shows a placeholder; nothing shifts when it arrives.
   More photographs would fix this immediately; the data layer needs no changes,
   just new filenames in `bakes.ts` / `craft.ts` / `socialGallery.ts`.
 - **The red-rose cake carries a "Durai ♥ Monisha" topper.** That is real
-  commissioned work, which is fine to show — but as the hero it means the first
-  words on the site are another couple's names. Worth a look before launch.
+  commissioned work, which is fine to show. It is no longer the hero — the
+  pastel art cake took that slot, which also suits the "work of art" line — but
+  the topper is still visible in the carousel and the craft section.
 
 ---
 

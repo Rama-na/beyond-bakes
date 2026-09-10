@@ -1,0 +1,227 @@
+.depth {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* ---- The 3D stage ---- */
+
+.depth__stage {
+  position: relative;
+  width: 100%;
+  height: clamp(420px, 62vh, 640px);
+  perspective: 1600px;
+  transform-style: preserve-3d;
+  display: grid;
+  place-items: center;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.depth__stage:active {
+  cursor: grabbing;
+}
+
+.depth__stage:focus-visible {
+  outline: 2px solid var(--deep-pink);
+  outline-offset: 8px;
+}
+
+.depth__card {
+  position: absolute;
+  width: clamp(240px, 26vw, 360px);
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+  /* Backface would flash through during the turn. */
+  backface-visibility: hidden;
+}
+
+.depth__hit {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+.depth__frame {
+  display: block;
+  overflow: hidden;
+  /* Square-ish corners: the photography is elegant enough without a card look. */
+  border-radius: 2px;
+  box-shadow: 0 30px 60px -30px rgba(37, 33, 36, 0.42);
+}
+
+.depth__frame .figure {
+  height: 100%;
+}
+
+/* The readout carries the label in carousel mode. */
+.depth__card-meta {
+  display: none;
+}
+
+/* ---- Readout ---- */
+
+.depth__readout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'index    controls'
+    'name     controls'
+    'desc     controls';
+  align-items: center;
+  gap: 0.4rem 2rem;
+  padding-top: clamp(0.5rem, 2vw, 1.5rem);
+  border-top: 1px solid var(--line-soft);
+}
+
+.depth__index {
+  grid-area: index;
+}
+.depth__name {
+  grid-area: name;
+}
+.depth__desc {
+  grid-area: desc;
+}
+.depth__controls {
+  grid-area: controls;
+}
+
+.depth__readout .depth__index {
+  color: var(--pink);
+}
+
+.depth__name {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.4vw, 3.25rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  /* Re-keyed per card, so it fades in on every change. */
+  animation: depthName 620ms var(--ease-out);
+}
+
+@keyframes depthName {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.depth__desc {
+  color: var(--muted-ink);
+  font-size: 0.95rem;
+  max-width: 34ch;
+}
+
+.depth__readout .depth__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.depth__arrow {
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 0.9rem;
+  transition:
+    background-color 380ms var(--ease-soft),
+    color 380ms var(--ease-soft),
+    border-color 380ms var(--ease-soft);
+}
+
+.depth__arrow:hover,
+.depth__arrow:focus-visible {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--cream);
+}
+
+.depth__hint {
+  margin-left: 0.5rem;
+  color: var(--muted-ink);
+  opacity: 0.75;
+}
+
+/* ---- Reduced motion / no-3D fallback: a plain readable list ---- */
+
+.depth[data-reduced='true'] {
+  gap: 0;
+}
+
+.depth[data-reduced='true'] .depth__stage {
+  height: auto;
+  perspective: none;
+  transform-style: flat;
+  cursor: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2.5rem;
+  place-items: stretch;
+}
+
+.depth[data-reduced='true'] .depth__card {
+  position: relative;
+  width: 100%;
+  transform: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+.depth[data-reduced='true'] .depth__card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.depth[data-reduced='true'] .depth__card-name {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+.depth[data-reduced='true'] .depth__card-desc {
+  color: var(--muted-ink);
+  font-size: 0.92rem;
+}
+
+/* ---- Mobile ---- */
+
+@media (max-width: 900px) {
+  .depth__readout {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'index'
+      'name'
+      'desc'
+      'controls';
+    gap: 0.5rem;
+  }
+
+  .depth__readout .depth__controls {
+    margin-top: 0.75rem;
+  }
+
+  .depth__stage {
+    height: clamp(360px, 52vh, 480px);
+    perspective: 1100px;
+  }
+
+  .depth__card {
+    width: clamp(190px, 50vw, 250px);
+  }
+
+  .depth__readout {
+    text-align: left;
+  }
+}

@@ -1,3 +1,10 @@
+.social {
+  position: relative;
+  z-index: 1;
+  /* Room for the drift so tiles never clip the sections either side. */
+  overflow: hidden;
+}
+
 .social__head {
   display: flex;
   align-items: flex-end;
@@ -32,27 +39,44 @@
 .social__grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(0.5rem, 1.2vw, 1.25rem);
+  gap: clamp(0.75rem, 1.6vw, 1.5rem);
+  align-items: start;
 }
 
 .social__item {
   opacity: 0;
+  will-change: transform;
+}
+
+/* Every other tile sits lower, so the row reads as a wall rather than a strip. */
+.social__item:nth-child(even) {
+  margin-top: clamp(1.5rem, 4vw, 3.5rem);
 }
 
 .social__link {
   display: block;
   overflow: hidden;
   position: relative;
+  border-radius: 2px;
 }
 
 .social__link .figure {
-  transition: transform 800ms var(--ease-out);
+  transition:
+    transform 900ms var(--ease-out),
+    filter 700ms var(--ease-soft);
 }
 
+/* Hovering one tile settles the rest back rather than lifting the hovered one
+   out on its own — the wall responds as a whole. */
 @media (hover: hover) and (pointer: fine) {
-  .social__link:hover .figure,
+  .social__grid:hover .social__item .figure {
+    filter: saturate(0.72) brightness(1.04);
+  }
+
+  .social__item:hover .figure,
   .social__link:focus-visible .figure {
-    transform: scale(1.04);
+    filter: none;
+    transform: scale(1.035);
   }
 }
 
@@ -65,5 +89,9 @@
 @media (prefers-reduced-motion: reduce) {
   .social__link .figure {
     transition: none;
+  }
+
+  .social__item {
+    transform: none !important;
   }
 }

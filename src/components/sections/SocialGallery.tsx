@@ -4,11 +4,17 @@ import { socialGallery, socialCta } from '../../data/socialGallery';
 import { brand } from '../../data/brand';
 import { Figure } from '../common/Figure';
 import { revealUp } from '../../lib/animations';
+import { prefersReducedMotion } from '../../hooks/useReducedMotion';
 import './social-gallery.css';
 
 /**
- * Editorial gallery, hand-maintained from `socialGallery.ts`.
- * Nothing is fetched from Instagram at runtime.
+ * The last MOVEMENT beat before the page goes quiet for the ask.
+ *
+ * The tiles drift at slightly different rates as the section passes, and
+ * hovering one settles the others back — the wall reacts, but slowly, and
+ * nothing here is a 3D showpiece competing with the carousel.
+ *
+ * Hand-maintained from `socialGallery.ts`; nothing is fetched from Instagram.
  */
 export function SocialGallery() {
   const root = useRef<HTMLElement>(null);
@@ -20,6 +26,26 @@ export function SocialGallery() {
     const ctx = gsap.context(() => {
       revealUp('.social__item', { y: 40, start: 'top 88%', stagger: 0.08 });
       revealUp('.social__text > *', { y: 22, start: 'top 86%', stagger: 0.08 });
+
+      if (prefersReducedMotion()) return;
+
+      // Alternating drift. Small — it should read as the wall breathing.
+      el.querySelectorAll<HTMLElement>('.social__item').forEach((item, i) => {
+        gsap.fromTo(
+          item,
+          { y: i % 2 === 0 ? 26 : -18 },
+          {
+            y: i % 2 === 0 ? -26 : 18,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 1.1,
+            },
+          },
+        );
+      });
     }, el);
 
     return () => ctx.revert();
@@ -61,7 +87,7 @@ export function SocialGallery() {
                   src={item.src}
                   alt={item.alt}
                   objectPosition={item.objectPosition}
-                  ratio="1 / 1"
+                  ratio="4 / 5"
                   placeholderLabel={`Add ${item.src.split('/').pop()}`}
                 />
               </a>

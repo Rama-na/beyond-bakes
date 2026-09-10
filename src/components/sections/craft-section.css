@@ -1,3 +1,8 @@
+.craft {
+  position: relative;
+  z-index: 1;
+}
+
 .craft__head {
   display: flex;
   flex-direction: column;

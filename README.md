@@ -23,9 +23,8 @@ npm run preview  # serve the build locally
 npm run lint
 ```
 
-> **Before it looks right:** six photographs are missing from `public/images/`.
-> See [`CONTENT_TODO.md`](./CONTENT_TODO.md). Until they are added, each frame shows
-> a blush placeholder naming the file it needs.
+> All six photographs are in `public/images/`. The written copy is still a
+> draft — see [`CONTENT_TODO.md`](./CONTENT_TODO.md).
 
 ---
 
@@ -99,37 +98,76 @@ from there by the nav, footer, social section and DM handoff.
 
 ## How the motion works
 
-Three layers, deliberately kept apart.
+Three layers, deliberately kept apart, plus one motif that ties them together.
 
-**Lenis** owns smooth scrolling. One shared instance (`hooks/useLenis.ts`), driven by
-the GSAP ticker so Lenis and ScrollTrigger stay on the same clock. It is not created
-at all when the visitor prefers reduced motion — native scrolling is the accessible
-default.
+### The thread
 
-**GSAP + ScrollTrigger** own everything scroll-linked: the hero entrance and exit, the
-pinned horizontal signature gallery, image parallax, clip reveals, and the two
-background transitions. Shared helpers live in `lib/animations.ts` so the vocabulary
-stays consistent; every section wraps its work in `gsap.context()` and reverts on
-unmount.
+`components/motion/BrandThread.tsx` is the spine of the page: a single piped
+line, drawn from the very top to the very bottom, that the visitor draws as
+they scroll. It weaves left and right behind the sections so the page reads as
+one continuous gesture rather than a stack of blocks.
 
-**A small set of custom components** (`components/motion/`) cover masked text reveals,
-parallax frames and the magnetic button. There is no component library — the site
-should look built, not assembled.
+It is one `<path>` in a normalised `0 0 100 100` viewBox stretched over the
+whole document (`preserveAspectRatio="none"`), with `pathLength={1}` so drawing
+is just `strokeDashoffset` 1 → 0 scrubbed against page scroll — which is what
+DrawSVG does, without the paid plugin. `vector-effect="non-scaling-stroke"`
+keeps the line hairline-thin under that very non-uniform scale.
 
-### Reduced motion
+It has fifteen oscillations, not three. The page is fifteen viewports tall, so
+a gentle whole-page S-curve presents as a dead-straight vertical line on any
+single screen — the curvature has to repeat often enough to be visible in the
+window you are actually looking through.
 
-`prefers-reduced-motion: reduce` is honoured throughout, not just as a CSS blanket:
+`components/motion/Swoosh.tsx` is the same gesture at heading scale: it draws
+itself under a heading as the heading arrives. Used on three headings only —
+under every heading it would stop being a motif and become a rule.
 
-- Lenis is never instantiated
-- The brand preloader is skipped entirely
-- The pinned horizontal gallery becomes a normal swipe rail
-- Parallax and clip reveals are dropped
-- Reveals degrade to a short fade
+### The rest
+
+**Lenis** owns smooth scrolling. One shared instance (`hooks/useLenis.ts`),
+driven by the GSAP ticker so Lenis and ScrollTrigger stay on the same clock. It
+is not created at all when the visitor prefers reduced motion.
+
+**GSAP + ScrollTrigger** conduct everything scroll-linked: the hero, the thread,
+the full-bleed reveal, the carousel arrangement, the portraits converging, the
+gallery drift, and the two background transitions. Shared helpers live in
+`lib/animations.ts`; every section wraps its work in `gsap.context()` and
+reverts on unmount.
+
+**No component library.** The depth carousel, the scroll-expand reveal and the
+drifting wall are built here rather than installed — the brief was for a site
+that feels designed rather than assembled, and these needed brand-specific
+tuning (2px corners, blush palette, restrained travel) that would have meant
+rewriting a dependency anyway.
 
 ### Rhythm
 
-Sections deliberately alternate motion and quiet. `SignatureMessage` — "From us, to
-you" — is the least designed thing on the page, and should stay that way.
+The page alternates deliberately, because if everything moves nothing is
+special:
+
+```
+QUIET      hero
+MOVEMENT   brand intro
+WOW        the photograph opens to full bleed
+PLAY       signature bakes, turned by hand
+—          the craft, read rather than watched
+INTIMATE   Girvani and Swapna meet
+QUIET      from us, to you
+MOVEMENT   the wall drifts
+QUIET      the ask
+```
+
+### Reduced motion
+
+`prefers-reduced-motion: reduce` is honoured throughout, not as a CSS blanket:
+
+- Lenis is never instantiated
+- The brand preloader is skipped entirely
+- The thread is present but already drawn — no scroll-linked motion
+- The depth carousel becomes a plain, readable grid of labelled cards
+- The full-bleed reveal renders as its finished state, unpinned
+- The portraits do not travel; the gallery does not drift
+- Reveals degrade to a short fade
 
 ---
 
@@ -220,11 +258,12 @@ src/
   components/
     layout/      Navbar, Footer, Preloader
     hero/        Hero
-    sections/    BrandIntro, SignatureShowcase, SignatureCard, BakeDetail,
-                 CraftSection, StorySection, SignatureMessage, SocialGallery, OrderCTA
+    sections/    BrandIntro, ScrollExpand, SignatureShowcase, DepthCarousel,
+                 BakeDetail, CraftSection, StorySection, SignatureMessage,
+                 SocialGallery, OrderCTA
     ordering/    OrderPanel, EnquiryForm, InstagramHandoff
-    motion/      RevealText, ParallaxImage, MagneticButton
-    common/      Figure, Cursor
+    motion/      BrandThread, Swoosh, RevealText, ParallaxImage, MagneticButton
+    common/      Figure, Cursor, Grain
   data/          brand, bakes, craft, story, socialGallery
   hooks/         useLenis, useReducedMotion
   lib/           animations, instagram
@@ -233,3 +272,20 @@ src/
 
 Each component keeps its own CSS file beside it. Tokens, resets and the shared
 button/type primitives are in `styles/globals.css`.
+
+## Colour
+
+Roughly 80% cream/white, 15% blush, 5% deep rose and gold. The site is not
+pink — pink is the accent that lets the photography and the portraits carry the
+colour. All of it is defined once at the top of `styles/globals.css`; the older
+token names (`--background`, `--deep-pink`, `--muted-ink`) are mapped onto the
+palette rather than duplicated.
+
+## A note on `npm run build`
+
+The build runs `scripts/check-css.mjs` first, which fails on unbalanced braces
+in any stylesheet. A stray `{` does not stop CSS bundling — the parser silently
+nests every following rule inside the unterminated block. When that block is a
+media query, the entire site loses its styling outside that one breakpoint
+while looking perfect inside it. That shipped here once; the check exists so it
+cannot happen quietly again.
