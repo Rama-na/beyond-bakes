@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { asset } from '../../lib/asset';
 import './figure.css';
 
 interface FigureProps {
@@ -68,7 +69,7 @@ export function Figure({
       {status !== 'missing' && (
         <img
           ref={imgRef}
-          src={src}
+          src={asset(src)}
           alt={alt}
           loading={priority ? 'eager' : 'lazy'}
           decoding={priority ? 'sync' : 'async'}

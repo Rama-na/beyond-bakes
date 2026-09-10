@@ -11,8 +11,8 @@
       content="BeyondBakes is a Chennai-based pastry brand by Girvani and Swapna. Celebration cakes made to order in Anna Nagar."
     />
 
-    <!-- Confirm the production domain before launch, then set the canonical
-         and og:url to match. -->
+    <!-- Absolute URLs: social scrapers do not resolve relative ones. Update
+         these together with vite.config.ts `base` if the domain changes. -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="BeyondBakes" />
     <meta property="og:title" content="BeyondBakes — Where Every Bite Is a Work of Art" />
@@ -20,7 +20,8 @@
       property="og:description"
       content="A Chennai-based pastry brand by Girvani and Swapna. Celebration cakes made to order in Anna Nagar."
     />
-    <meta property="og:image" content="/brand/logo-mark.png" />
+    <meta property="og:image" content="https://rama-na.github.io/beyond-bakes/brand/logo-mark.png" />
+    <meta property="og:url" content="https://rama-na.github.io/beyond-bakes/" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="BeyondBakes — Where Every Bite Is a Work of Art" />
@@ -28,10 +29,11 @@
       name="twitter:description"
       content="A Chennai-based pastry brand by Girvani and Swapna. Celebration cakes made to order in Anna Nagar."
     />
-    <meta name="twitter:image" content="/brand/logo-mark.png" />
+    <meta name="twitter:image" content="https://rama-na.github.io/beyond-bakes/brand/logo-mark.png" />
 
-    <link rel="icon" type="image/png" href="/brand/logo-mark-small.png" />
-    <link rel="apple-touch-icon" href="/brand/logo-mark.png" />
+    <link rel="icon" type="image/png" href="%BASE_URL%brand/logo-mark-small.png" />
+    <link rel="apple-touch-icon" href="%BASE_URL%brand/logo-mark.png" />
+    <link rel="canonical" href="https://rama-na.github.io/beyond-bakes/" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { brand } from '../../data/brand';
 import { scrollTo } from '../../hooks/useLenis';
+import { asset } from '../../lib/asset';
 import './navbar.css';
 
 const LINKS = [
@@ -55,7 +56,7 @@ export function Navbar({ onStartOrder }: NavbarProps) {
             go('#top');
           }}
         >
-          <img src="/brand/logo-mark-small.png" alt="" className="nav__mark" width="36" height="36" />
+          <img src={asset('/brand/logo-mark-small.png')} alt="" className="nav__mark" width="36" height="36" />
           <span className="nav__wordmark">{brand.name}</span>
         </a>
 

@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { story, founders } from '../../data/story';
 import { revealUp } from '../../lib/animations';
+import { asset } from '../../lib/asset';
 import './signature-message.css';
 
 /**
@@ -41,7 +42,7 @@ export function SignatureMessage() {
               {f.signature.kind === 'image' && f.signature.src ? (
                 <img
                   className="sign__img"
-                  src={f.signature.src}
+                  src={asset(f.signature.src)}
                   alt={`${f.name}'s signature`}
                   loading="lazy"
                 />

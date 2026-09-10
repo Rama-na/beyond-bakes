@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { prefersReducedMotion } from '../../hooks/useReducedMotion';
+import { asset } from '../../lib/asset';
 import './preloader.css';
 
 const SEEN_KEY = 'bb:intro-seen';
@@ -101,11 +102,11 @@ export function Preloader({ onDone }: PreloaderProps) {
         playsInline
         autoPlay
         preload="auto"
-        poster="/brand/logo-mark.png"
+        poster={asset('/brand/logo-mark.png')}
         aria-hidden="true"
       >
-        <source src="/brand/logo-animation.webm" type="video/webm" />
-        <source src="/brand/logo-animation.mp4" type="video/mp4" />
+        <source src={asset('/brand/logo-animation.webm')} type="video/webm" />
+        <source src={asset('/brand/logo-animation.mp4')} type="video/mp4" />
       </video>
       <span className="sr-only">Loading BeyondBakes</span>
     </div>

@@ -29,6 +29,52 @@ npm run lint
 
 ---
 
+## Deployment (GitHub Pages)
+
+Live at **https://rama-na.github.io/beyond-bakes/**
+
+Pages serves this from a subpath, not a domain root, so `vite.config.ts` sets:
+
+```ts
+base: '/beyond-bakes/'   // build only; dev stays on '/'
+```
+
+Without it the built HTML asks for `/assets/index.js`, which resolves to
+`rama-na.github.io/assets/index.js`, 404s, and renders a blank page.
+
+**Anything in `public/` must go through `asset()`** (`src/lib/asset.ts`). Files
+there are copied verbatim and are *not* rewritten by the bundler, so a literal
+`"/brand/logo.png"` stays absolute and breaks on a subpath. Paths are stored
+with a leading slash in `src/data/` because it reads better; `asset()` joins
+them to `import.meta.env.BASE_URL` at the point of use. `Figure` already does
+this, so every photograph is covered — only add it if you reference `public/`
+somewhere new.
+
+In `index.html`, use `%BASE_URL%` (Vite substitutes it). Open Graph and
+`canonical` tags are the exception: social scrapers do not resolve relative
+URLs, so those are fully qualified and must be updated by hand if the domain
+changes.
+
+### How it deploys
+
+`.github/workflows/deploy-pages.yml` builds on push and publishes `dist/`.
+
+> **One-time setup:** repo Settings → Pages → Build and deployment →
+> Source: **GitHub Actions**. If it is set to "Deploy from a branch", the
+> workflow's output is ignored and Pages serves the repo root — which holds the
+> Vite *source* `index.html` pointing at `/src/main.tsx`, a file no browser can
+> execute. That produces the same blank page.
+
+### Moving to a custom domain
+
+```bash
+VITE_BASE=/ npm run build
+```
+
+Then update the absolute `og:`/`canonical` URLs in `index.html`.
+
+---
+
 ## Content is data, not markup
 
 Every word and image on the page comes from `src/data/`. Nothing needs a component
