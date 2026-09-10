@@ -244,7 +244,7 @@
   align-self: flex-start;
   color: var(--muted-ink);
   min-height: 44px;
-  display: inline-flex;
+  display: flex;
   align-items: center;
 }
 

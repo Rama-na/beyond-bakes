@@ -294,10 +294,12 @@ a {
   display: none;
 }
 
-/* Understated text link with an underline that grows */
+/* Understated text link with an underline that grows.
+   Deliberately sets no `display`: inline is right for links inside prose, and
+   anything needing a box (a 44px nav target, say) sets its own without having
+   to out-specify this rule. */
 .link-underline {
   position: relative;
-  display: inline-block;
   padding-bottom: 2px;
 }
 

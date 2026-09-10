@@ -1,4 +1,4 @@
-import { useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import './figure.css';
 
 interface FigureProps {
@@ -43,6 +43,21 @@ export function Figure({
 }: FigureProps) {
   const [status, setStatus] = useState<'loading' | 'loaded' | 'missing'>('loading');
   const imgRef = useRef<HTMLImageElement>(null);
+
+  /**
+   * A cached image can finish decoding before React attaches onLoad, and the
+   * event never fires — leaving the photograph stuck at opacity 0. Catch that
+   * case by reading the element's own state once it is mounted.
+   */
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!img || status !== 'loading') return;
+
+    if (img.complete) {
+      // naturalWidth is 0 for an image that completed by failing.
+      setStatus(img.naturalWidth > 0 ? 'loaded' : 'missing');
+    }
+  }, [status, src]);
 
   return (
     <div

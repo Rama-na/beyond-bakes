@@ -62,7 +62,7 @@
   color: var(--ink);
   /* Full-height hit area, even though the text itself is small. */
   min-height: 44px;
-  display: inline-flex;
+  display: flex;
   align-items: center;
 }
 

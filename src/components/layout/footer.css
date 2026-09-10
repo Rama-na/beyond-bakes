@@ -55,8 +55,9 @@
   letter-spacing: 0.14em;
   font-weight: 600;
   min-height: 44px;
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  align-self: flex-start;
 }
 
 @media (max-width: 720px) {
