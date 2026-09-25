@@ -60,17 +60,16 @@ export function Preloader({ onDone }: PreloaderProps) {
       if (finished.current) return;
       finished.current = true;
 
-      // Release the page as the fade begins so the hero entrance overlaps it,
-      // and stop the fading layer from catching clicks meant for the page.
+      // Stop the lifting layer from catching clicks meant for the page.
       gsap.set(el, { pointerEvents: 'none' });
-      onDone();
 
-      gsap.to(el, {
-        opacity: 0,
-        duration: 0.85,
-        ease: 'power2.inOut',
-        onComplete: () => setGone(true),
-      });
+      // The curtain lifts away upward while the mark sinks back into it; the
+      // page is released part-way, so the hero rises as the curtain clears.
+      gsap
+        .timeline({ onComplete: () => setGone(true) })
+        .to(vid, { scale: 0.86, opacity: 0, duration: 0.9, ease: 'power3.in' }, 0)
+        .to(el, { clipPath: 'inset(0% 0% 100% 0%)', duration: 1.25, ease: 'expo.inOut' }, 0.35)
+        .add(() => onDone(), 0.7);
     };
 
     vid?.play().catch(finish); // autoplay blocked → just get out of the way

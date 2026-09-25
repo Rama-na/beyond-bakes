@@ -13,75 +13,64 @@
 
 .expand__frame {
   position: relative;
-  width: 46%;
-  height: 52%;
+  width: min(30vw, 470px);
+  height: 64svh;
+  border-radius: var(--arch);
   overflow: hidden;
-  border-radius: 2px;
-  will-change: width, height;
+  will-change: width, height, border-radius;
 }
 
 .expand__frame .figure {
   height: 100%;
+  will-change: transform;
 }
 
-/* Only deep enough to carry the caption once the frame is full bleed. */
+/* Deep only where the caption sits — low and to the left — so the rest of
+   the photograph keeps its light. The floor in this shot is pale grey, which
+   is exactly where the type lands, so it needs real weight there. */
 .expand__veil {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(37, 33, 36, 0) 40%,
-    rgba(37, 33, 36, 0.34) 78%,
-    rgba(37, 33, 36, 0.55) 100%
-  );
+  opacity: 0;
+  background:
+    radial-gradient(120% 70% at 0% 100%, rgba(37, 33, 36, 0.62) 0%, rgba(37, 33, 36, 0) 60%),
+    linear-gradient(180deg, rgba(37, 33, 36, 0) 50%, rgba(37, 33, 36, 0.4) 100%);
   pointer-events: none;
 }
 
 .expand__caption {
   position: absolute;
   left: var(--gutter);
-  right: var(--gutter);
-  bottom: clamp(2.5rem, 7vh, 5rem);
+  bottom: clamp(2.5rem, 8vh, 5.5rem);
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
+  font-size: clamp(2.4rem, 6vw, 6rem);
+  line-height: 0.98;
   color: var(--cream);
   pointer-events: none;
+  text-shadow: 0 2px 30px rgba(37, 33, 36, 0.35);
 }
 
-.expand__caption .micro {
-  color: var(--blush);
-  opacity: 0;
+/* Italic sets the second line apart; colour stays cream — blush over a pale
+   floor was too faint to read. */
+.expand__caption em {
+  font-style: italic;
+  color: var(--cream);
 }
 
-.expand__title {
-  font-size: clamp(2rem, 5.5vw, 5rem);
-  font-weight: 300;
-  line-height: 0.98;
-  letter-spacing: -0.03em;
-  opacity: 0;
-  max-width: 18ch;
-}
-
-.expand__title em {
-  color: var(--blush);
+.expand__line > span {
+  transform: translateY(110%);
 }
 
 @media (max-width: 720px) {
   .expand__frame {
-    width: 76%;
-    height: 44%;
-  }
-
-  .expand__title {
-    max-width: 14ch;
+    width: 70vw;
+    height: 56svh;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .expand__stage {
-    height: 76svh;
+    height: 80svh;
   }
 
   .expand__frame {
@@ -90,8 +79,11 @@
     border-radius: 0;
   }
 
-  .expand__caption .micro,
-  .expand__title {
+  .expand__line > span {
+    transform: none;
+  }
+
+  .expand__veil {
     opacity: 1;
   }
 }

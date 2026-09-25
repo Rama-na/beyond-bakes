@@ -1,0 +1,124 @@
+.gallery {
+  position: relative;
+  z-index: 1;
+  padding-block: var(--section-y);
+  overflow: hidden;
+}
+
+.gallery__head {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.gallery__title {
+  font-size: var(--step-display);
+}
+
+.gallery__handle {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.15em;
+  min-height: 44px;
+  transition: color 600ms var(--ease-soft);
+}
+
+.gallery__handle em {
+  font-style: italic;
+  color: var(--ink);
+  transition: color 600ms var(--ease-soft);
+}
+
+.gallery__arrow {
+  font-family: var(--font-sans);
+  font-size: 0.32em;
+  margin-top: 0.4em;
+  color: var(--deep-rose);
+  transition: transform 700ms var(--ease-expo);
+}
+
+.gallery__handle:hover em,
+.gallery__handle:focus-visible em {
+  color: var(--deep-rose);
+}
+
+.gallery__handle:hover .gallery__arrow,
+.gallery__handle:focus-visible .gallery__arrow {
+  transform: translate(0.12em, -0.12em);
+}
+
+/* ---- The wall ---- */
+
+.gallery__wall {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.9rem, 1.6vw, 1.5rem);
+}
+
+.gallery__row {
+  overflow: hidden;
+}
+
+.gallery__track {
+  display: flex;
+  width: max-content;
+  gap: clamp(0.9rem, 1.6vw, 1.5rem);
+  will-change: transform;
+}
+
+.gallery__tile {
+  position: relative;
+  flex: 0 0 auto;
+  height: clamp(300px, 56vh, 580px);
+  overflow: hidden;
+}
+
+/* Detail crops: magnify towards a focal point. The `scale` property is used
+   (not `transform`) so it composes with the hover zoom on the wrapper. */
+.gallery__tile img {
+  scale: var(--zoom, 1);
+  transform-origin: var(--focus, 50% 50%);
+}
+
+.gallery__tile--rect {
+  aspect-ratio: 4 / 5;
+  border-radius: 2px;
+}
+
+.gallery__tile--arch {
+  aspect-ratio: 3 / 4;
+  border-radius: var(--arch);
+}
+
+.gallery__tile .figure {
+  height: 100%;
+  transition:
+    transform 1.1s var(--ease-expo),
+    filter 800ms var(--ease-soft);
+}
+
+/* Resting on the wall slows it (in JS) and settles every tile but the one
+   under the pointer. */
+@media (hover: hover) and (pointer: fine) {
+  .gallery__wall:hover .gallery__tile .figure {
+    filter: saturate(0.75) brightness(1.03);
+  }
+
+  .gallery__wall .gallery__tile:hover .figure {
+    filter: none;
+    transform: scale(1.05);
+  }
+}
+
+/* Reduced motion: a still row you can scroll sideways. */
+@media (prefers-reduced-motion: reduce) {
+  .gallery__row {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .gallery__tile .figure {
+    transition: none;
+  }
+}

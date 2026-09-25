@@ -1,30 +1,25 @@
 .sigs {
-  position: relative;
-  z-index: 1;
+  /* Cards fan outside the stage by design; clip on the section rather than the
+     stage, since any overflow value other than visible flattens preserve-3d. */
   overflow-x: clip;
 }
 
 .sigs__head {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  max-width: 42rem;
-  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  gap: 1.6rem;
+  margin-bottom: clamp(1.5rem, 4vw, 3rem);
 }
 
-.sigs__headline {
+.sigs__count {
+  color: var(--pink);
+}
+
+.sigs__title {
   font-size: var(--step-display);
-  font-weight: 300;
-  line-height: 0.96;
-  letter-spacing: -0.03em;
 }
 
-.sigs__headline .reveal-line:last-child .reveal-line__inner {
+.sigs__title .reveal-line:last-child .reveal-line__inner {
   font-style: italic;
-  color: var(--deep-pink);
-}
-
-.sigs__note {
-  font-size: 0.95rem;
-  margin-top: 0.5rem;
+  color: var(--deep-rose);
 }

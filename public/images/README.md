@@ -1,27 +1,25 @@
 # Photographs
 
-Supplied and in place:
-
 ```
-signature-red-rose-cake.jpg   Three-tier ivory cake, red garden roses  (HERO)
-signature-art-cake.jpg        Pastel palette-knife cake, cakesicles + cone
+signature-art-cake.jpg        Pastel palette-knife cake, cakesicles + cone   (HERO)
+floral-event-cake.jpg         Floral celebration, white arched plinth       (full-bleed reveal)
 garden-floral-cake.jpg        Pressed-flower tiered cake, close-up
-floral-event-cake.jpg         Floral celebration setup, white arched plinth
-portrait-girvani.jpg          Portrait of Girvani
+signature-red-rose-cake.jpg   Three tiers, red garden roses
+portrait-girvani.jpg          Girvani
+portrait-swapna.jpg           Swapna
 ```
 
-Still missing:
+## Adding more
 
-```
-portrait-swapna.jpg           Portrait of Swapna  (4:5 crop, to match Girvani's)
-```
+More photographs are the biggest single upgrade left — four cake shots
+currently carry the whole page. To add one:
 
-Until it exists, that frame shows a blush placeholder naming the file it is
-waiting for — the layout is already correct, so nothing moves when it lands.
+1. Export at roughly 1600px on the long edge, JPEG.
+2. Drop it in this folder.
+3. Reference it from `src/data/bakes.ts`, `src/data/craft.ts` or
+   `src/data/socialGallery.ts`.
 
-Filenames are referenced from `src/data/bakes.ts`, `src/data/story.ts`,
-`src/data/craft.ts`, `src/data/socialGallery.ts` and
-`src/components/hero/Hero.tsx`. Everything resolves through `asset()`
-(`src/lib/asset.ts`) so it works on the GitHub Pages subpath.
+No component changes are needed. Every path resolves through `asset()`
+(`src/lib/asset.ts`), so it works on the GitHub Pages subpath.
 
 See `../../CONTENT_TODO.md`.

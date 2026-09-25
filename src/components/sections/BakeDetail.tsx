@@ -155,17 +155,6 @@ export function BakeDetail({ bake, onClose, onEnquire }: BakeDetailProps) {
                 </div>
               ) : null}
 
-              {bake.details?.length ? (
-                <div className="detail__block" data-detail-stagger>
-                  <h3 className="micro">The details</h3>
-                  <ul className="detail__list">
-                    {bake.details.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-
               {bake.sizes?.length ? (
                 <div className="detail__block" data-detail-stagger>
                   <h3 className="micro">Sizes</h3>
@@ -179,11 +168,6 @@ export function BakeDetail({ bake, onClose, onEnquire }: BakeDetailProps) {
                   </ul>
                 </div>
               ) : null}
-
-              <div className="detail__block" data-detail-stagger>
-                <h3 className="micro">Made for</h3>
-                <p>{bake.madeFor.join(' · ')}</p>
-              </div>
 
               {bake.leadTime && (
                 <p className="detail__lead" data-detail-stagger>

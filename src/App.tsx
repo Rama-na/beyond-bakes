@@ -9,14 +9,13 @@ import { Cursor } from './components/common/Cursor';
 import { Grain } from './components/common/Grain';
 import { BrandThread } from './components/motion/BrandThread';
 import { Hero } from './components/hero/Hero';
-import { BrandIntro } from './components/sections/BrandIntro';
+import { Manifesto } from './components/sections/Manifesto';
 import { ScrollExpand } from './components/sections/ScrollExpand';
 import { SignatureShowcase } from './components/sections/SignatureShowcase';
 import { BakeDetail } from './components/sections/BakeDetail';
-import { CraftSection } from './components/sections/CraftSection';
+import { CraftSequence } from './components/sections/CraftSequence';
 import { StorySection } from './components/sections/StorySection';
-import { SignatureMessage } from './components/sections/SignatureMessage';
-import { SocialGallery } from './components/sections/SocialGallery';
+import { Gallery } from './components/sections/Gallery';
 import { OrderCTA } from './components/sections/OrderCTA';
 import { OrderPanel } from './components/ordering/OrderPanel';
 import type { Bake } from './data/bakes';
@@ -63,32 +62,31 @@ export default function App() {
       <Navbar onStartOrder={() => openOrder()} />
 
       {/*
-        The page is one continuous story, paced deliberately:
+        One continuous story, paced deliberately — if everything moves,
+        nothing is special:
 
-          QUIET     hero
-          MOVEMENT  brand intro
-          WOW       the photograph opens to full bleed
-          PLAY      signature bakes, turned by hand
-          —         the craft, read rather than watched
-          INTIMATE  Girvani and Swapna meet
-          QUIET     from us, to you
+          QUIET     hero — the arch rises, the name follows
+          MOVEMENT  one sentence, filled in as it is read
+          WOW       the arch opens to the whole celebration
+          PLAY      the signatures, turned by hand
+          SEQUENCE  the craft — four words, pinned
+          INTIMATE  two friends drift together
           MOVEMENT  the wall drifts
-          QUIET     the ask
+          QUIET     the ask, and the name, very large
 
-        The thread is drawn behind all of it, tying them together.
+        The thread is drawn behind all of it, tying it together.
       */}
       <div className="page">
         <BrandThread />
 
         <main id="main" className="page__content">
           <Hero ready={ready} />
-          <BrandIntro />
+          <Manifesto />
           <ScrollExpand />
           <SignatureShowcase onOpenBake={setActiveBake} />
-          <CraftSection />
+          <CraftSequence />
           <StorySection />
-          <SignatureMessage />
-          <SocialGallery />
+          <Gallery />
           <OrderCTA onStartOrder={() => openOrder()} />
         </main>
 

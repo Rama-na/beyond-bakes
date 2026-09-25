@@ -1,17 +1,17 @@
 /* ============================================================
    BeyondBakes — global styles
-   Editorial pastry atelier. Warm white, restrained blush,
-   serif for emotion, sans for everything functional.
+   Editorial pastry atelier. Cream ground, restrained blush,
+   serif for feeling, sans for function, photography for everything else.
    ============================================================ */
 
 /* ---------- 1. Tokens ---------- */
 
 :root {
   /* ---- Palette ----
-     Deliberately cream-led, roughly 80% cream/white, 15% blush,
-     5% deep rose and gold. The site is not pink; pink is the accent that
-     lets the photography and the portraits carry the colour. */
+     Roughly 80% cream/white, 15% blush, 5% deep rose and gold. The site is
+     not pink; pink is the accent that lets the photography carry the colour. */
   --cream: #fffdf9;
+  --cream-deep: #f9f3ee;
   --white: #ffffff;
   --blush: #f7d9dd;
   --blush-deep: #f0c9d0;
@@ -21,36 +21,43 @@
   --ink: #252124;
   --muted: #74696c;
 
-  /* Names used throughout the components, mapped onto the palette above so
-     the tokens stay in one place. */
+  /* Older names used by the ordering flow, mapped onto the palette. */
   --background: var(--cream);
   --surface: var(--white);
   --deep-pink: var(--deep-rose);
   --muted-ink: var(--muted);
 
-  --line: rgba(37, 33, 36, 0.13);
+  /* The live page ground. Tweened (not the body colour directly) by the
+     section tints, so anything that must match the ground can read it. */
+  --page-bg: #fffdf9;
+
+  --line: rgba(37, 33, 36, 0.12);
   --line-soft: rgba(37, 33, 36, 0.06);
+
+  /* The arch. It is already in their world — the plinths, the backdrops, the
+     doorway behind both portraits — so it becomes the page's frame shape. */
+  --arch: 999px 999px 0 0;
 
   /* Type */
   --font-display: 'Cormorant Garamond', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
-  --font-sans: 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Manrope Variable', 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  --step-hero: clamp(3.8rem, 13vw, 11rem);
-  --step-display: clamp(2.75rem, 7vw, 7rem);
-  --step-title: clamp(2rem, 4vw, 3.5rem);
-  --step-lede: clamp(1.25rem, 2.1vw, 1.85rem);
-  --step-body: clamp(1rem, 1.05vw, 1.15rem);
-  --step-micro: clamp(0.68rem, 0.8vw, 0.78rem);
+  --step-mega: clamp(4.5rem, 17vw, 17rem);
+  --step-hero: clamp(3.4rem, 9.6vw, 10rem);
+  --step-display: clamp(2.8rem, 6.6vw, 6.6rem);
+  --step-title: clamp(2rem, 3.6vw, 3.4rem);
+  --step-lede: clamp(1.6rem, 3.6vw, 3.4rem);
+  --step-body: clamp(0.98rem, 1vw, 1.08rem);
+  --step-micro: 0.7rem;
 
   /* Space */
-  --gutter: clamp(1.25rem, 5vw, 5rem);
-  --section-y: clamp(6rem, 14vh, 12rem);
-  --measure: 62ch;
+  --gutter: clamp(1.25rem, 4.5vw, 4.5rem);
+  --section-y: clamp(7rem, 18vh, 14rem);
 
-  /* Motion */
+  /* Motion — long, soft deceleration. Nothing on this page should snap. */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-expo: cubic-bezier(0.19, 1, 0.22, 1);
   --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
-  --dur: 640ms;
 
   --header-h: 84px;
 }
@@ -66,6 +73,8 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: auto; /* Lenis owns scrolling */
+  scrollbar-width: thin;
+  scrollbar-color: var(--pink) transparent;
 }
 
 body,
@@ -82,7 +91,7 @@ dd {
 }
 
 body {
-  background: var(--background);
+  background: var(--page-bg);
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: var(--step-body);
@@ -90,9 +99,8 @@ body {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
-  /* Background shifts between warm white and blush as sections pass */
-  transition: background-color 900ms var(--ease-soft);
 }
 
 img,
@@ -132,7 +140,7 @@ a {
 
 /* Visible, on-brand focus. Never removed. */
 :focus-visible {
-  outline: 2px solid var(--deep-pink);
+  outline: 2px solid var(--deep-rose);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -142,42 +150,81 @@ a {
   color: var(--ink);
 }
 
-/* ---------- 3. Typographic primitives ---------- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--pink);
+  border-radius: 6px;
+}
+
+/* ---------- 3. Type ---------- */
 
 .display {
   font-family: var(--font-display);
   font-weight: 300;
-  line-height: 0.94;
-  letter-spacing: -0.02em;
-  text-wrap: balance;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  font-feature-settings: 'liga', 'kern';
+}
+
+.display em,
+.display i {
+  font-style: italic;
+  color: var(--deep-rose);
 }
 
 .micro {
   font-size: var(--step-micro);
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.22em;
   font-weight: 600;
-  color: var(--muted-ink);
+  color: var(--muted);
 }
 
 .lede {
-  font-size: var(--step-lede);
-  line-height: 1.5;
-  font-weight: 300;
-  max-width: var(--measure);
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+  line-height: 1.55;
+  font-weight: 400;
   color: var(--ink);
+  max-width: 52ch;
 }
 
 .body-muted {
-  color: var(--muted-ink);
-  max-width: var(--measure);
+  color: var(--muted);
+  max-width: 58ch;
+}
+
+/* A halo in the exact page colour. Invisible against the ground; where the
+   thread passes behind a line of type it clears the line away from the
+   glyphs, so the thread reads as going under the words rather than through
+   them. Only for type set on the page ground — never over photographs. */
+.halo {
+  text-shadow:
+    0 0 2px var(--page-bg),
+    0 0 8px var(--page-bg),
+    0 0 18px var(--page-bg);
+}
+
+/* A short rule before the label — quiet, but it reads as a system. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 2.2rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
 }
 
 /* ---------- 4. Layout ---------- */
 
-/* The thread is absolutely positioned over the whole page and painted first;
-   `.page__content` sits above it in DOM order, so the line passes behind the
-   sections and shows through wherever they are transparent. */
+/* The thread is painted first over the whole page; content sits above it, so
+   the line passes behind the sections wherever they are transparent. */
 .page {
   position: relative;
 }
@@ -186,7 +233,6 @@ a {
   position: relative;
   z-index: 1;
 }
-
 
 .shell {
   width: 100%;
@@ -198,16 +244,22 @@ a {
 .section {
   padding-block: var(--section-y);
   position: relative;
+  z-index: 1;
 }
 
-.rule {
-  height: 1px;
-  background: var(--line-soft);
-  border: 0;
-  width: 100%;
+/* Line masks for rise-in text. */
+.mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
 }
 
-/* Screen-reader only */
+.mask > * {
+  display: block;
+  will-change: transform;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -227,8 +279,9 @@ a {
   transform: translate(-50%, -140%);
   z-index: 200;
   background: var(--ink);
-  color: var(--background);
-  padding: 0.75rem 1.25rem;
+  color: var(--cream);
+  padding: 0.9rem 1.4rem;
+  min-height: 44px;
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -242,41 +295,41 @@ a {
 /* ---------- 5. Buttons ---------- */
 
 .btn {
-  --btn-fg: var(--ink);
   display: inline-flex;
   align-items: center;
-  gap: 0.7em;
-  font-size: 0.78rem;
+  gap: 0.9em;
+  font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.2em;
   font-weight: 600;
-  color: var(--btn-fg);
-  padding: 1.1rem 1.9rem;
-  min-height: 48px;
+  color: var(--ink);
+  padding: 1.15rem 2rem;
+  min-height: 52px;
   border: 1px solid var(--line);
   border-radius: 999px;
   position: relative;
   overflow: hidden;
   isolation: isolate;
   transition:
-    color 420ms var(--ease-soft),
-    border-color 420ms var(--ease-soft);
+    color 520ms var(--ease-soft),
+    border-color 520ms var(--ease-soft);
 }
 
-/* The wash that fills from the bottom on hover */
+/* The wash rises from below on hover, like icing filling a bag. */
 .btn::before {
   content: '';
   position: absolute;
   inset: 0;
   background: var(--ink);
+  border-radius: inherit;
   transform: translateY(101%);
-  transition: transform 560ms var(--ease-out);
+  transition: transform 700ms var(--ease-expo);
   z-index: -1;
 }
 
 .btn:hover,
 .btn:focus-visible {
-  color: var(--background);
+  color: var(--cream);
   border-color: var(--ink);
 }
 
@@ -286,43 +339,30 @@ a {
 }
 
 .btn .btn-arrow {
-  transition: transform 460ms var(--ease-out);
+  transition: transform 600ms var(--ease-expo);
 }
 
 .btn:hover .btn-arrow,
 .btn:focus-visible .btn-arrow {
-  transform: translateX(4px);
+  transform: translateX(5px);
 }
 
 .btn--solid {
   background: var(--ink);
-  color: var(--background);
+  color: var(--cream);
   border-color: var(--ink);
 }
 
 .btn--solid::before {
-  background: var(--deep-pink);
+  background: var(--deep-rose);
 }
 
 .btn--solid:hover,
 .btn--solid:focus-visible {
-  color: var(--background);
-  border-color: var(--deep-pink);
+  color: var(--cream);
+  border-color: var(--deep-rose);
 }
 
-.btn--ghost {
-  border-color: transparent;
-  padding-inline: 0;
-}
-
-.btn--ghost::before {
-  display: none;
-}
-
-/* Understated text link with an underline that grows.
-   Deliberately sets no `display`: inline is right for links inside prose, and
-   anything needing a box (a 44px nav target, say) sets its own without having
-   to out-specify this rule. */
 .link-underline {
   position: relative;
   padding-bottom: 2px;
@@ -338,7 +378,7 @@ a {
   background: currentColor;
   transform: scaleX(0);
   transform-origin: right;
-  transition: transform 500ms var(--ease-out);
+  transition: transform 600ms var(--ease-expo);
 }
 
 .link-underline:hover::after,
@@ -347,28 +387,7 @@ a {
   transform-origin: left;
 }
 
-/* ---------- 6. Media ---------- */
-
-.figure {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(150deg, var(--blush) 0%, var(--blush-deep) 100%);
-}
-
-.figure img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* Photographs fade up as they decode instead of snapping in */
-  opacity: 0;
-  transition: opacity 900ms var(--ease-soft);
-}
-
-.figure img[data-loaded='true'] {
-  opacity: 1;
-}
-
-/* ---------- 7. Reduced motion ---------- */
+/* ---------- 6. Reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -378,9 +397,5 @@ a {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-
-  .figure img {
-    opacity: 1;
   }
 }

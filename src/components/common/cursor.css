@@ -4,16 +4,18 @@
   left: 0;
   z-index: 90;
   pointer-events: none;
-  width: 84px;
-  height: 84px;
-  margin: -42px 0 0 -42px;
+  width: 92px;
+  height: 92px;
+  margin: -46px 0 0 -46px;
   border-radius: 999px;
-  background: var(--deep-pink);
-  color: var(--background);
+  background: rgba(37, 33, 36, 0.86);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--cream);
   display: grid;
   place-items: center;
   transform: scale(0);
-  transition: transform 460ms var(--ease-out);
+  transition: transform 650ms var(--ease-expo);
   will-change: transform;
 }
 
@@ -22,12 +24,12 @@
 }
 
 .cursor__label {
-  font-size: 0.62rem;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
   opacity: 0;
-  transition: opacity 300ms var(--ease-soft) 120ms;
+  transition: opacity 400ms var(--ease-soft) 120ms;
 }
 
 .cursor[data-active='true'] .cursor__label {

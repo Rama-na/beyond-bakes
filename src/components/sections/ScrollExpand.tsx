@@ -1,20 +1,16 @@
 import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { brand } from '../../data/brand';
 import { Figure } from '../common/Figure';
-import { prefersReducedMotion } from '../../hooks/useReducedMotion';
 import './scroll-expand.css';
 
 /**
- * The WOW beat.
+ * WOW.
  *
- * A single photograph begins as a small contained frame and opens to full
- * bleed as the section is pinned, then the caption settles over it. One image,
- * one gesture, no competing motion — this is the moment the page hands over to
- * the photography.
- *
- * Under reduced motion the section is simply the finished state: a full-bleed
- * photograph with its caption, no pin and no scrub.
+ * The same arch the hero opened with, now opening all the way. It begins as a
+ * small arched window onto the cake and, pinned, widens until the whole
+ * celebration fills the screen — the arch flattening into the edges of the
+ * viewport as it goes. One line of type arrives only once the room is visible.
  */
 export function ScrollExpand() {
   const root = useRef<HTMLElement>(null);
@@ -23,76 +19,82 @@ export function ScrollExpand() {
     const el = root.current;
     if (!el) return;
 
-    if (prefersReducedMotion()) {
-      gsap.set(el.querySelector('.expand__frame'), {
-        width: '100%',
-        height: '100%',
-        borderRadius: 0,
-      });
-      gsap.set(el.querySelectorAll('[data-expand-caption]'), { opacity: 1, y: 0 });
-      return;
-    }
+    const mm = gsap.matchMedia(el);
 
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: el,
-          start: 'top top',
-          end: '+=120%',
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
-          anticipatePin: 1,
-        },
-      });
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const frame = el.querySelector<HTMLElement>('.expand__frame');
+      if (!frame) return;
 
-      tl.fromTo(
-        '.expand__frame',
-        { width: '46%', height: '52%', borderRadius: '2px' },
-        { width: '100%', height: '100%', borderRadius: '0px', ease: 'power2.inOut' },
-      )
-        // The photograph settles back to its true scale as the frame catches up.
+      // A true semicircle on top needs a radius of half the starting width.
+      const startW = () => Math.min(window.innerWidth * (window.innerWidth > 720 ? 0.3 : 0.7), 470);
+      const startH = () => window.innerHeight * (window.innerWidth > 720 ? 0.64 : 0.56);
+
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: el,
+            start: 'top top',
+            end: '+=130%',
+            pin: true,
+            scrub: 1.2,
+            invalidateOnRefresh: true,
+            anticipatePin: 1,
+          },
+        })
         .fromTo(
-          '.expand__frame .figure',
-          { scale: 1.25 },
-          { scale: 1, ease: 'power2.inOut' },
-          0,
+          frame,
+          {
+            width: startW,
+            height: startH,
+            borderTopLeftRadius: () => startW() / 2,
+            borderTopRightRadius: () => startW() / 2,
+          },
+          {
+            width: () => window.innerWidth,
+            height: () => window.innerHeight,
+            borderTopLeftRadius: 0,
+            borderTopRightRadius: 0,
+            ease: 'power2.inOut',
+          },
         )
+        .fromTo('.expand__frame .figure', { scale: 1.3 }, { scale: 1, ease: 'power2.inOut' }, 0)
+        .fromTo('.expand__veil', { opacity: 0 }, { opacity: 1, ease: 'none' }, 0.45)
+        // `y: 0` clears the pixel offset GSAP parses from the CSS translateY.
         .fromTo(
-          '[data-expand-caption]',
-          { opacity: 0, y: 24 },
-          { opacity: 1, y: 0, stagger: 0.1, ease: 'power2.out' },
-          0.55,
+          '.expand__line > span',
+          { yPercent: 110, y: 0 },
+          { yPercent: 0, y: 0, stagger: 0.12, ease: 'power3.out' },
+          0.62,
         );
-    }, el);
+    });
 
-    ScrollTrigger.refresh();
-    return () => ctx.revert();
+    mm.add('(prefers-reduced-motion: reduce)', () => {
+      gsap.set('.expand__line > span', { yPercent: 0, y: 0 });
+      gsap.set('.expand__veil', { opacity: 1 });
+    });
+
+    return () => mm.revert();
   }, []);
 
   return (
-    <section className="expand" ref={root} aria-labelledby="expand-heading">
+    <section className="expand" ref={root} aria-labelledby="expand-caption">
       <div className="expand__stage">
         <div className="expand__frame">
           <Figure
             src="/images/floral-event-cake.jpg"
-            alt="A tiered cake set on a white arched plinth inside a florist's glasshouse, surrounded by hydrangea, roses and wildflowers"
-            objectPosition="50% 46%"
-            placeholderLabel="Add floral-event-cake.jpg"
+            alt="A tiered cake on a white arched plinth inside a glasshouse, surrounded by hydrangea, roses and wildflowers"
+            objectPosition="50% 52%"
           />
           <div className="expand__veil" aria-hidden="true" />
         </div>
 
-        <div className="expand__caption">
-          <p className="micro" data-expand-caption>
-            A morning in a glasshouse
-          </p>
-          <h2 className="expand__title display" id="expand-heading" data-expand-caption>
-            Made for the moments
-            <br />
-            <em>worth remembering.</em>
-          </h2>
-        </div>
+        <h2 className="expand__caption display" id="expand-caption">
+          {brand.momentLine.map((line, i) => (
+            <span className="mask expand__line" key={i}>
+              <span>{i === 1 ? <em>{line}</em> : line}</span>
+            </span>
+          ))}
+        </h2>
       </div>
     </section>
   );

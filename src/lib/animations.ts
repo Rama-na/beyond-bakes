@@ -11,37 +11,6 @@ gsap.registerPlugin(ScrollTrigger);
  * content still arrives, it just stops travelling.
  */
 
-interface RevealOptions {
-  delay?: number;
-  duration?: number;
-  y?: number;
-  start?: string;
-  stagger?: number;
-}
-
-/** The workhorse: rise + fade, once, as the element enters. */
-export function revealUp(
-  target: gsap.TweenTarget,
-  { delay = 0, duration = 1, y = 44, start = 'top 85%', stagger = 0 }: RevealOptions = {},
-) {
-  const reduced = prefersReducedMotion();
-  const trigger = Array.isArray(target) ? (target[0] as Element) : (target as Element);
-
-  return gsap.fromTo(
-    target,
-    { y: reduced ? 0 : y, opacity: 0 },
-    {
-      y: 0,
-      opacity: 1,
-      duration: reduced ? 0.4 : duration,
-      delay,
-      stagger,
-      ease: 'power3.out',
-      scrollTrigger: { trigger, start, once: true },
-    },
-  );
-}
-
 /**
  * Line-by-line reveal for editorial paragraphs. Each line is expected to be
  * wrapped in a masking element so the text slides out from behind its own edge.
@@ -64,89 +33,30 @@ export function revealLines(lines: Element[], { start = 'top 82%', stagger = 0.0
   );
 }
 
-/** Slow vertical drift on a photograph inside an overflow-hidden frame. */
-export function parallax(image: Element, strength = 12) {
-  if (prefersReducedMotion()) return;
-
-  return gsap.fromTo(
-    image,
-    { yPercent: -strength / 2 },
-    {
-      yPercent: strength / 2,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: image.parentElement ?? image,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: true,
-        invalidateOnRefresh: true,
-      },
-    },
-  );
-}
-
-/** A frame that opens from a clipped edge as it enters. */
-export function clipReveal(frame: Element, { start = 'top 80%' } = {}) {
-  if (prefersReducedMotion()) {
-    gsap.set(frame, { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1 });
-    return;
-  }
-
-  return gsap.fromTo(
-    frame,
-    { clipPath: 'inset(0% 0% 100% 0%)' },
-    {
-      clipPath: 'inset(0% 0% 0% 0%)',
-      duration: 1.35,
-      ease: 'power3.inOut',
-      scrollTrigger: { trigger: frame, start, once: true },
-    },
-  );
-}
-
 /**
- * Transitions the page background as a section passes through the viewport.
- * Used sparingly — twice on the page — so it reads as a mood change, not a
- * light show.
+ * Tints the page ground while a section is in view, and returns it to cream
+ * afterwards. Used on a few quiet sections only, so it reads as a change of
+ * mood rather than a light show.
+ *
+ * It tweens the --page-bg variable rather than the body colour, so everything
+ * that must match the ground — the text halos — follows it frame for frame.
+ * The resting colour comes from the --cream token rather than the live value,
+ * which may be mid-tint when a breakpoint change rebuilds the triggers.
  */
 export function backgroundShift(section: Element, color: string) {
-  const original = getComputedStyle(document.body).backgroundColor;
+  const root = document.documentElement;
+  const rest = getComputedStyle(root).getPropertyValue('--cream').trim() || '#fffdf9';
+  const tint = (to: string) =>
+    gsap.to(root, { '--page-bg': to, duration: 1, ease: 'power2.inOut', overwrite: 'auto' });
 
   return ScrollTrigger.create({
     trigger: section,
     start: 'top 60%',
     end: 'bottom 40%',
-    onEnter: () => gsap.to(document.body, { backgroundColor: color, duration: 0.9 }),
-    onEnterBack: () => gsap.to(document.body, { backgroundColor: color, duration: 0.9 }),
-    onLeave: () => gsap.to(document.body, { backgroundColor: original, duration: 0.9 }),
-    onLeaveBack: () => gsap.to(document.body, { backgroundColor: original, duration: 0.9 }),
+    onEnter: () => tint(color),
+    onEnterBack: () => tint(color),
+    onLeave: () => tint(rest),
+    onLeaveBack: () => tint(rest),
   });
 }
 
-/** Splits a string into word spans, each inside its own masking span. */
-export function splitWords(el: HTMLElement) {
-  const text = el.textContent ?? '';
-  el.textContent = '';
-  const inners: HTMLElement[] = [];
-
-  text.split(/(\s+)/).forEach((chunk) => {
-    if (!chunk.trim()) {
-      el.appendChild(document.createTextNode(chunk));
-      return;
-    }
-    const mask = document.createElement('span');
-    mask.style.display = 'inline-block';
-    mask.style.overflow = 'hidden';
-    mask.style.verticalAlign = 'top';
-
-    const inner = document.createElement('span');
-    inner.style.display = 'inline-block';
-    inner.textContent = chunk;
-
-    mask.appendChild(inner);
-    el.appendChild(mask);
-    inners.push(inner);
-  });
-
-  return inners;
-}

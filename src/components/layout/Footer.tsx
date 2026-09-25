@@ -1,14 +1,16 @@
 import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { brand } from '../../data/brand';
-import { RevealText } from '../motion/RevealText';
-import { revealUp } from '../../lib/animations';
 import './footer.css';
 
 interface FooterProps {
   onStartOrder: () => void;
 }
 
+/**
+ * The sign-off: a row of the few facts that matter, then the wordmark set as
+ * large as the page is wide, rising into place as you reach the end.
+ */
 export function Footer({ onStartOrder }: FooterProps) {
   const root = useRef<HTMLElement>(null);
 
@@ -16,48 +18,71 @@ export function Footer({ onStartOrder }: FooterProps) {
     const el = root.current;
     if (!el) return;
 
-    const ctx = gsap.context(() => {
-      revealUp('.footer__cols > *', { y: 20, start: 'top 92%', stagger: 0.06 });
-    }, el);
+    const mm = gsap.matchMedia(el);
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      gsap.fromTo(
+        '.footer__char',
+        { yPercent: 105 },
+        {
+          yPercent: 0,
+          duration: 1.4,
+          ease: 'expo.out',
+          stagger: 0.035,
+          scrollTrigger: { trigger: '.footer__mark', start: 'top 95%', once: true },
+        },
+      );
+      gsap.fromTo(
+        '.footer__row > *',
+        { opacity: 0, y: 12 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: 'expo.out',
+          stagger: 0.06,
+          scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+        },
+      );
+    });
 
-    return () => ctx.revert();
+    return () => mm.revert();
   }, []);
+
+  const word = (text: string) =>
+    text.split('').map((c, i) => (
+      <span className="footer__char-mask" key={i}>
+        <span className="footer__char">{c}</span>
+      </span>
+    ));
 
   return (
     <footer className="footer" ref={root}>
       <div className="shell">
-        <RevealText
-          lines={["Let's make", 'something beautiful.']}
-          as="p"
-          className="footer__statement display"
-        />
-
-        <div className="footer__cols">
-          <div className="footer__col">
-            <p className="footer__brand display">{brand.name}</p>
-            <p className="micro footer__loc">{brand.location}</p>
-          </div>
-
-          <nav className="footer__col" aria-label="Footer">
+        <div className="footer__row">
+          <span className="micro">{brand.location}</span>
+          <nav className="footer__links" aria-label="Footer">
             <a
-              className="footer__link link-underline"
+              className="micro link-underline footer__link"
               href={brand.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
               Instagram ↗
             </a>
-            <button className="footer__link link-underline" onClick={onStartOrder}>
+            <button className="micro link-underline footer__link" onClick={onStartOrder}>
               Start an order
             </button>
           </nav>
-
-          <div className="footer__col footer__col--end">
-            <p className="micro footer__copy">
-              © {new Date().getFullYear()} {brand.name}
-            </p>
-          </div>
+          <span className="micro">© {new Date().getFullYear()}</span>
         </div>
+
+        <p className="footer__mark display halo">
+          <span className="sr-only">{brand.name}</span>
+          <span aria-hidden="true">
+            {word('Beyond')}
+            <em>{word('Bakes')}</em>
+          </span>
+        </p>
       </div>
     </footer>
   );

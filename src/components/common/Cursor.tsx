@@ -3,19 +3,21 @@ import { gsap } from 'gsap';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import './cursor.css';
 
+const LABELS: Record<string, string> = { view: 'View', drag: 'Drag', open: 'Open' };
+
 /**
- * A small trailing cursor that shows "View" over signature cards.
+ * A small trailing cursor that names what a pointer can do: "View" over a
+ * card, "Drag" over the carousel, "Open" over the gallery.
  *
- * Desktop pointers only. It is decorative and additive — every affordance it
- * hints at is also a real, focusable control, so nothing is lost without it.
+ * Desktop pointers only, and purely additive — everything it hints at is also
+ * a real, focusable, labelled control.
  */
 export function Cursor() {
   const dot = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(false);
+  const [label, setLabel] = useState<string | null>(null);
   const reduced = useReducedMotion();
 
-  // Read once at mount rather than from an effect — a pointing device does not
-  // change mid-session, and this avoids a second render on load.
+  // A pointing device does not change mid-session; read it once.
   const [finePointer] = useState(
     () =>
       typeof window !== 'undefined' &&
@@ -29,18 +31,17 @@ export function Cursor() {
     const el = dot.current;
     if (!el) return;
 
-    const xTo = gsap.quickTo(el, 'x', { duration: 0.42, ease: 'power3' });
-    const yTo = gsap.quickTo(el, 'y', { duration: 0.42, ease: 'power3' });
+    const xTo = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power3' });
+    const yTo = gsap.quickTo(el, 'y', { duration: 0.5, ease: 'power3' });
 
     const onMove = (e: PointerEvent) => {
       xTo(e.clientX);
       yTo(e.clientY);
-      // data-cursor="view" anywhere up the tree turns the label on.
-      const target = e.target as HTMLElement | null;
-      setActive(Boolean(target?.closest('[data-cursor="view"]')));
+      const host = (e.target as HTMLElement | null)?.closest<HTMLElement>('[data-cursor]');
+      setLabel(host ? (LABELS[host.dataset.cursor ?? ''] ?? null) : null);
     };
 
-    const onLeave = () => setActive(false);
+    const onLeave = () => setLabel(null);
 
     window.addEventListener('pointermove', onMove, { passive: true });
     document.addEventListener('pointerleave', onLeave);
@@ -54,8 +55,8 @@ export function Cursor() {
   if (!enabled) return null;
 
   return (
-    <div ref={dot} className="cursor" data-active={active} aria-hidden="true">
-      <span className="cursor__label">View</span>
+    <div ref={dot} className="cursor" data-active={Boolean(label)} aria-hidden="true">
+      <span className="cursor__label">{label}</span>
     </div>
   );
 }

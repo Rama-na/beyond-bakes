@@ -148,6 +148,7 @@ export function DepthCarousel({ onOpenBake }: DepthCarouselProps) {
         aria-roledescription="carousel"
         aria-label="Signature bakes"
         tabIndex={reduced ? -1 : 0}
+        data-cursor="drag"
       >
         {bakes.map((bake, i) => {
           const isActive = i === index;
@@ -182,7 +183,6 @@ export function DepthCarousel({ onOpenBake }: DepthCarouselProps) {
                 <span className="depth__card-meta">
                   <span className="micro">{String(i + 1).padStart(2, '0')}</span>
                   <span className="depth__card-name display">{bake.name}</span>
-                  <span className="depth__card-desc">{bake.shortDescription}</span>
                 </span>
               </button>
             </div>
@@ -193,24 +193,27 @@ export function DepthCarousel({ onOpenBake }: DepthCarouselProps) {
       {/* Caption for the active card, outside the 3D space so it stays crisp. */}
       {!reduced && (
         <div className="depth__readout">
-          <p className="depth__index micro">
-            {String(index + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}
-          </p>
-          <h3 className="depth__name display" key={active.id}>
-            {active.name}
-          </h3>
-          <p className="depth__desc">{active.shortDescription}</p>
+          <div className="depth__label">
+            <p className="depth__index micro">
+              {String(index + 1).padStart(2, '0')} — {String(count).padStart(2, '0')}
+            </p>
+            <h3 className="depth__name display halo" key={active.id}>
+              {active.name}
+            </h3>
+          </div>
 
-          <div className="depth__controls">
-            <button className="depth__arrow" onClick={() => go(-1)} aria-label="Previous bake">
-              <span aria-hidden="true">←</span>
+          <div className="depth__actions">
+            <button className="depth__explore micro link-underline" onClick={() => onOpenBake(active)}>
+              Explore <span aria-hidden="true">→</span>
             </button>
-            <button className="depth__arrow" onClick={() => go(1)} aria-label="Next bake">
-              <span aria-hidden="true">→</span>
-            </button>
-            <span className="depth__hint micro" aria-hidden="true">
-              Drag to explore
-            </span>
+            <div className="depth__controls">
+              <button className="depth__arrow" onClick={() => go(-1)} aria-label="Previous bake">
+                <span aria-hidden="true">←</span>
+              </button>
+              <button className="depth__arrow" onClick={() => go(1)} aria-label="Next bake">
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
           </div>
 
           <p className="sr-only" role="status">

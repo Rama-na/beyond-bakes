@@ -1,128 +1,110 @@
 .hero {
   position: relative;
-  min-height: 100svh;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  align-items: center;
+  z-index: 1;
+  height: 100svh;
+  min-height: 620px;
   overflow: hidden;
-  padding-top: var(--header-h);
-  isolation: isolate;
 }
 
-/* ---- Photograph ---- */
+/* ---- The arch ---- */
 
-.hero__frame {
+.hero__arch {
   position: absolute;
-  z-index: 0;
-  opacity: 0;
-  /* A tall editorial portrait, centred, with the type layered over it. */
-  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(46vw, 620px);
-  height: min(84vh, 860px);
+  top: calc(50% + var(--header-h) * 0.35);
+  width: min(30vw, 470px);
+  height: min(74svh, 720px);
+  translate: -50% -50%;
+  border-radius: var(--arch);
+  overflow: hidden;
+  /* Starts clipped away; the entrance raises it out of the page. */
+  clip-path: inset(100% 0% 0% 0%);
+  will-change: clip-path, transform;
+  box-shadow: 0 50px 90px -60px rgba(37, 33, 36, 0.45);
+}
+
+.hero__arch .figure {
+  height: 100%;
   will-change: transform;
 }
 
-.hero__frame .figure {
-  height: 100%;
-}
-
-/* Keeps the display type legible where it crosses the photograph. */
-.hero__scrim {
-  position: absolute;
-  inset: 0;
-  background:
-    /* Softens the photograph behind the display type and tagline. */
-    linear-gradient(
-      180deg,
-      rgba(255, 249, 247, 0.4) 0%,
-      rgba(255, 249, 247, 0.26) 22%,
-      rgba(255, 249, 247, 0.52) 46%,
-      rgba(255, 249, 247, 0.58) 62%,
-      rgba(255, 249, 247, 0.3) 82%,
-      rgba(255, 249, 247, 0.46) 100%
-    );
-  pointer-events: none;
-}
-
-/* ---- Typography ---- */
-
-.hero__type {
-  position: relative;
-  z-index: 1;
-  grid-row: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  pointer-events: none;
-  will-change: transform, opacity;
-}
+/* ---- Wordmark ---- */
 
 .hero__title {
-  font-size: var(--step-hero);
-  line-height: 0.86;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
   font-weight: 300;
-  letter-spacing: -0.035em;
-  display: flex;
-  flex-direction: column;
-  /* Mix-blend keeps the words readable over both the blush ground and the
-     photograph without a heavy overlay. */
-  mix-blend-mode: multiply;
-  color: var(--ink);
 }
 
 .hero__word {
-  display: block;
-  overflow: hidden;
-  padding-bottom: 0.06em;
-  margin-bottom: -0.06em;
+  position: absolute;
+  font-size: clamp(3.4rem, 9vw, 10rem);
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+  will-change: transform, opacity;
 }
 
-.hero__word-inner {
-  display: block;
+/* Either side of the arch, set at different heights so the eye travels
+   diagonally across the photograph. */
+.hero__word--l {
+  left: var(--gutter);
+  top: 30%;
+}
+
+.hero__word--r {
+  right: var(--gutter);
+  top: 56%;
+}
+
+.hero__word--r em {
+  font-style: italic;
+  color: var(--deep-rose);
+}
+
+.hero__char-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* Room for descenders ('y') and the italic overhang. */
+  padding: 0 0.02em 0.14em;
+  margin: 0 -0.02em -0.14em;
+}
+
+.hero__char {
+  display: inline-block;
+  transform: translateY(115%);
   will-change: transform;
 }
 
-/* Offset the two words so they frame the photograph rather than sit on it. */
-.hero__word--one {
-  align-self: flex-start;
-  margin-left: -0.02em;
-}
-
-.hero__word--two {
-  align-self: flex-end;
-  margin-right: -0.02em;
-  font-style: italic;
-  color: var(--deep-pink);
-}
+/* ---- Tagline + foot ---- */
 
 .hero__tagline {
-  margin-top: clamp(1.5rem, 3vw, 2.75rem);
-  font-size: clamp(1.15rem, 1.8vw, 1.7rem);
-  font-weight: 300;
+  position: absolute;
+  right: var(--gutter);
+  top: calc(56% + clamp(3.4rem, 9vw, 10rem) * 1.05);
+  font-size: clamp(1.05rem, 1.35vw, 1.4rem);
   font-style: italic;
-  color: var(--ink);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.3;
+  color: var(--muted);
+  text-align: right;
   opacity: 0;
-  max-width: 22ch;
 }
-
-/* ---- Foot ---- */
 
 .hero__foot {
-  position: relative;
-  z-index: 1;
-  grid-row: 2;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(1.25rem, 3.5vh, 2.5rem);
   display: flex;
-  align-items: flex-end;
   justify-content: space-between;
-  gap: 1.5rem;
-  padding-bottom: clamp(1.75rem, 4vh, 3rem);
+  align-items: flex-end;
 }
 
-.hero__meta {
+.hero__foot > * {
   opacity: 0;
 }
 
@@ -130,99 +112,89 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.85rem;
-  opacity: 0;
+  gap: 0.8rem;
   min-height: 44px;
-  padding: 0.5rem;
+  min-width: 44px;
 }
 
 .hero__cue-line {
-  width: 1px;
-  height: 54px;
-  background: var(--line);
   position: relative;
+  width: 1px;
+  height: 48px;
+  background: var(--line);
   overflow: hidden;
 }
 
-/* A slow travelling tick down the line — the only looping motion on the page. */
+/* The only looping motion on the page: a slow drop down the line. */
 .hero__cue-line::after {
   content: '';
   position: absolute;
-  inset-inline: 0;
-  top: 0;
-  height: 40%;
-  background: var(--deep-pink);
-  animation: cueTravel 2.4s var(--ease-soft) infinite;
+  inset: 0;
+  background: var(--deep-rose);
+  transform: translateY(-100%);
+  animation: cueDrop 2.6s var(--ease-expo) infinite;
 }
 
-@keyframes cueTravel {
+@keyframes cueDrop {
   0% {
     transform: translateY(-100%);
   }
+  60%,
   100% {
-    transform: translateY(250%);
+    transform: translateY(100%);
   }
 }
 
-/* ---- Tablet / mobile ---- */
+/* ---- Tablet ---- */
 
-@media (max-width: 1024px) {
-  .hero__frame {
-    width: min(60vw, 460px);
-    height: min(66vh, 620px);
-  }
-}
-
-@media (max-width: 720px) {
-  .hero {
-    grid-template-rows: auto auto;
-    align-content: center;
-    gap: 2rem;
-    padding-top: calc(var(--header-h) + 1rem);
+@media (max-width: 1100px) {
+  .hero__arch {
+    width: min(36vw, 420px);
+    height: min(66svh, 620px);
   }
 
-  /* Mobile is not a squeezed desktop: type on top, photograph beneath it,
-     with the cake silhouette kept whole. */
-  .hero__frame {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 5;
-    max-height: 52vh;
-    grid-row: 2;
-    margin-inline: auto;
-    max-width: 420px;
-  }
-
-  .hero__scrim {
-    display: none;
-  }
-
-  .hero__type {
-    grid-row: 1;
-    align-items: flex-start;
-    text-align: left;
-    padding-inline: var(--gutter);
-  }
-
-  .hero__title {
-    align-items: flex-start;
-    mix-blend-mode: normal;
-  }
-
-  .hero__word--one,
-  .hero__word--two {
-    align-self: flex-start;
-    margin-inline: 0;
+  .hero__word {
+    font-size: clamp(3.2rem, 8.4vw, 7rem);
   }
 
   .hero__tagline {
-    margin-top: 1.25rem;
-    max-width: 18ch;
-    color: var(--muted-ink);
+    top: calc(56% + clamp(3.2rem, 8.4vw, 7rem) * 1.05);
+  }
+}
+
+/* ---- Mobile: the same composition, stacked vertically ----
+   Still absolutely placed (not `display: contents`), so the h1 keeps its
+   semantics — some Safari versions drop display:contents elements from the
+   accessibility tree, and this is the page's only h1. */
+
+@media (max-width: 720px) {
+  .hero {
+    min-height: 640px;
+  }
+
+  .hero__arch {
+    top: 53%;
+    width: min(72vw, 330px);
+    height: 52svh;
+  }
+
+  .hero__word {
+    font-size: clamp(3.2rem, 16vw, 4.6rem);
+  }
+
+  .hero__word--l {
+    top: calc(var(--header-h) + 1.5svh);
+  }
+
+  .hero__word--r {
+    top: auto;
+    bottom: 11svh;
+  }
+
+  .hero__tagline {
+    top: auto;
+    bottom: 5svh;
+    font-size: 1rem;
   }
 
   .hero__foot {
@@ -231,16 +203,22 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero__frame,
+  .hero__arch {
+    clip-path: none;
+  }
+
+  .hero__char {
+    transform: none;
+  }
+
   .hero__tagline,
-  .hero__meta,
-  .hero__cue {
+  .hero__foot > * {
     opacity: 1;
   }
 
   .hero__cue-line::after {
     animation: none;
-    height: 100%;
-    opacity: 0.4;
+    transform: none;
+    opacity: 0.35;
   }
 }

@@ -1,158 +1,117 @@
-.story {
-  position: relative;
-  z-index: 1;
-}
-
 .story__head {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: end;
+  margin-bottom: clamp(4rem, 10vw, 8rem);
 }
 
-.story__headline {
-  /* Each entry in `lines` is one visual line, and the reveal mask clips with
-     overflow:hidden — so this is scaled to keep the longest line on one row
-     rather than constraining the box around it. */
-  font-size: clamp(2.25rem, 5.2vw, 5.25rem);
-  font-weight: 300;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
+.story__head .eyebrow {
+  margin-bottom: 1.6rem;
 }
 
-.story__headline .reveal-line:last-child .reveal-line__inner {
+.story__title {
+  font-size: var(--step-display);
+}
+
+.story__title .reveal-line:last-child .reveal-line__inner {
   font-style: italic;
-  color: var(--deep-pink);
+  color: var(--deep-rose);
 }
 
-/* ---- Journey ---- */
-
-.story__journey {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  max-width: 58ch;
-  padding-bottom: clamp(4rem, 10vw, 8rem);
-}
-
-.story__journey p {
-  opacity: 0;
-  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
-  line-height: 1.72;
-  color: var(--muted-ink);
-}
-
-/* The opening line carries the weight — it is the whole origin in one breath. */
-.story__journey p:first-child {
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
-  line-height: 1.32;
+.story__line {
+  font-size: clamp(1.35rem, 2.1vw, 2rem);
   font-weight: 300;
-  color: var(--ink);
-  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--muted);
+  max-width: 24ch;
+  padding-bottom: 0.4em;
 }
 
-.story__journey p:last-child {
-  font-style: italic;
-  color: var(--deep-pink);
-}
+/* ---- The pair ---- */
 
-/* ---- Founders ---- */
-
-.story__founders {
+.story__pair {
   position: relative;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(2.5rem, 8vw, 7rem);
+  gap: clamp(3rem, 10vw, 10rem);
+  max-width: 1080px;
+  margin-inline: auto;
 }
 
 .founder {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-}
-
-.founder__portrait {
-  overflow: hidden;
+  align-items: center;
+  gap: 1.25rem;
   will-change: transform;
 }
 
-.founder__text {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+/* Swapna sits a little lower, so the pair reads as two people, not a grid. */
+.founder--swapna {
+  margin-top: clamp(3rem, 8vw, 7rem);
 }
 
-.founder__name {
-  font-size: clamp(2rem, 3.2vw, 3rem);
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -0.025em;
-  opacity: 0;
+.founder__arch {
+  width: 100%;
+  border-radius: var(--arch);
+  overflow: hidden;
+  will-change: clip-path;
+  box-shadow: 0 40px 80px -55px rgba(37, 33, 36, 0.5);
 }
 
-.founder__quote {
-  font-size: clamp(1.15rem, 1.7vw, 1.5rem);
-  font-style: italic;
-  font-weight: 300;
-  color: var(--deep-pink);
-  line-height: 1.4;
-  opacity: 0;
-  max-width: 24ch;
-}
-
-.founder__body {
-  font-size: 0.98rem;
-  opacity: 0;
-}
-
-.founder__handle {
-  align-self: flex-start;
-  color: var(--muted-ink);
-  opacity: 0;
+.founder__caption {
   min-height: 44px;
   display: flex;
   align-items: center;
 }
 
-.founder__text > .micro {
-  opacity: 0;
+.founder__handle {
+  color: var(--muted);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
 
-/* ---- The meeting point ---- */
-
-.story__union {
+/* The ampersand that arrives once they meet. */
+.story__amp {
   position: absolute;
-  top: clamp(140px, 20vw, 260px);
   left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  font-family: var(--font-display);
-  font-size: clamp(1.1rem, 2vw, 1.9rem);
-  font-weight: 400;
+  top: 46%;
+  translate: -50% -50%;
+  font-size: clamp(4rem, 10vw, 9rem);
   font-style: italic;
+  font-weight: 300;
   color: var(--deep-rose);
-  white-space: nowrap;
-  opacity: 0;
+  line-height: 1;
   pointer-events: none;
-  padding: 0.5rem 1.1rem;
-  background: var(--cream);
-  border-radius: 999px;
-  box-shadow: 0 10px 30px -18px rgba(37, 33, 36, 0.4);
+  opacity: 0;
 }
 
-@media (max-width: 900px) {
-  .story__founders {
+@media (max-width: 720px) {
+  .story__head {
     grid-template-columns: 1fr;
-    gap: 4rem;
+    gap: 1.75rem;
   }
 
-  .founder__portrait {
-    max-width: 380px;
+  .story__pair {
+    grid-template-columns: 1fr;
+    gap: 5rem;
+    max-width: 340px;
   }
 
-  /* Stacked, there is no gap between them to sit in. */
-  .story__union {
-    display: none;
+  .founder--swapna {
+    margin-top: 0;
+  }
+
+  .story__amp {
+    top: 50%;
+    font-size: 4.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story__amp {
+    opacity: 1;
   }
 }

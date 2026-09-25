@@ -6,8 +6,8 @@ import './navbar.css';
 
 const LINKS = [
   { label: 'Signatures', target: '#signatures' },
-  { label: 'Our story', target: '#story' },
   { label: 'The craft', target: '#craft' },
+  { label: 'Our story', target: '#story' },
 ];
 
 interface NavbarProps {
@@ -16,12 +16,25 @@ interface NavbarProps {
 
 export function Navbar({ onStartOrder }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
+  const [tucked, setTucked] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const lastY = useRef(0);
 
-  // Transparent over the hero, warm translucent once past it.
+  // Transparent over the hero, warm translucent once past it. Past the first
+  // screen it tucks away while reading down and returns on the first scroll
+  // up — so it never sits over a photograph, and is there the moment it is
+  // wanted. A small dead zone stops it flickering on tiny movements.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.75);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > window.innerHeight * 0.75);
+      const delta = y - lastY.current;
+      if (Math.abs(delta) > 6) {
+        setTucked(delta > 0 && y > window.innerHeight);
+        lastY.current = y;
+      }
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -46,7 +59,14 @@ export function Navbar({ onStartOrder }: NavbarProps) {
   };
 
   return (
-    <header className="nav" data-scrolled={scrolled} data-open={menuOpen}>
+    <header
+      className="nav"
+      data-scrolled={scrolled}
+      data-open={menuOpen}
+      // Never tuck away while the menu is open or keyboard focus is inside it.
+      data-tucked={tucked && !menuOpen}
+      onFocusCapture={() => setTucked(false)}
+    >
       <div className="nav__inner shell">
         <a
           className="nav__brand"

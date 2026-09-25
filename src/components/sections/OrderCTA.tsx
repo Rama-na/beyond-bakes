@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { RevealText } from '../motion/RevealText';
 import { MagneticButton } from '../motion/MagneticButton';
-import { revealUp, backgroundShift } from '../../lib/animations';
+import { backgroundShift } from '../../lib/animations';
 import './order-cta.css';
 
 interface OrderCTAProps {
@@ -10,8 +10,10 @@ interface OrderCTAProps {
 }
 
 /**
- * The ask. Phrased as an invitation rather than a transaction — orders are
- * taken personally at launch, and the copy says so plainly.
+ * QUIET — the ask.
+ *
+ * A headline and a button. How ordering works is explained inside the panel
+ * the button opens, at the moment it is relevant, not here.
  */
 export function OrderCTA({ onStartOrder }: OrderCTAProps) {
   const root = useRef<HTMLElement>(null);
@@ -20,29 +22,33 @@ export function OrderCTA({ onStartOrder }: OrderCTAProps) {
     const el = root.current;
     if (!el) return;
 
-    const ctx = gsap.context(() => {
-      revealUp('.cta__body', { y: 26, start: 'top 84%' });
-      revealUp('.cta__action', { y: 26, delay: 0.1, start: 'top 84%' });
-      backgroundShift(el, '#f7e6e8');
-    }, el);
+    const mm = gsap.matchMedia(el);
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      gsap.fromTo(
+        '.cta__action',
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.4,
+          ease: 'expo.out',
+          scrollTrigger: { trigger: el, start: 'top 60%', once: true },
+        },
+      );
+      backgroundShift(el, '#f8e7e9');
+    });
+    mm.add('(prefers-reduced-motion: reduce)', () => {
+      gsap.set('.cta__action', { opacity: 1 });
+    });
 
-    return () => ctx.revert();
+    return () => mm.revert();
   }, []);
 
   return (
-    <section className="section cta" id="order" ref={root}>
+    <section className="section cta" id="order" ref={root} aria-labelledby="cta-title">
       <div className="shell cta__inner">
-        <RevealText
-          lines={["Let's make", 'it personal.']}
-          as="h2"
-          className="cta__headline display"
-        />
-
-        <p className="cta__body lede">
-          Tell us what you&rsquo;re celebrating and we&rsquo;ll take it from there. Every
-          order starts as a conversation — it is the only way we know how to get it right.
-        </p>
-
+        <p className="micro eyebrow">Made to order</p>
+        <RevealText lines={["Let's make", 'it personal.']} as="h2" id="cta-title" className="cta__title display halo" />
         <div className="cta__action">
           <MagneticButton className="btn--solid cta__btn" onClick={onStartOrder}>
             Start an order

@@ -4,17 +4,15 @@ import { story, founders } from '../../data/story';
 import { RevealText } from '../motion/RevealText';
 import { Swoosh } from '../motion/Swoosh';
 import { Figure } from '../common/Figure';
-import { revealUp } from '../../lib/animations';
-import { prefersReducedMotion } from '../../hooks/useReducedMotion';
 import './story-section.css';
 
 /**
- * The INTIMATE beat.
+ * INTIMATE.
  *
- * The two portraits start apart and are drawn together as you scroll, with the
- * brand name settling between them once they meet. It is the story of the
- * section performed rather than described — two people who found each other,
- * and the thing that came of it.
+ * One headline, one sentence, two portraits. The portraits already carry each
+ * founder's name and line inside the photograph, so the page adds almost
+ * nothing beside them. As you scroll they drift together from either side, and
+ * an ampersand settles into the space between them once they meet.
  */
 export function StorySection() {
   const root = useRef<HTMLElement>(null);
@@ -23,113 +21,118 @@ export function StorySection() {
     const el = root.current;
     if (!el) return;
 
-    const ctx = gsap.context(() => {
-      revealUp('.story__journey p', { y: 26, start: 'top 84%', stagger: 0.1 });
+    const mm = gsap.matchMedia(el);
 
-      el.querySelectorAll('.founder').forEach((f) => {
-        revealUp(f.querySelectorAll('[data-founder-reveal]'), {
-          y: 28,
-          start: 'top 80%',
-          stagger: 0.07,
-        });
-      });
+    mm.add(
+      { motion: '(prefers-reduced-motion: no-preference)', wide: '(min-width: 721px)' },
+      (ctx) => {
+        const { motion, wide } = ctx.conditions as { motion: boolean; wide: boolean };
 
-      if (prefersReducedMotion()) {
-        gsap.set('.story__union', { opacity: 1 });
-        return;
-      }
+        if (!motion) {
+          gsap.set('.story__amp', { opacity: 1, scale: 1 });
+          gsap.set('.story__line', { opacity: 1 });
+          return;
+        }
 
-      // They converge as the block crosses the viewport — no pin, so the
-      // meeting lands naturally as the section settles into the middle.
-      gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: '.story__founders',
-            start: 'top 85%',
-            end: 'center 55%',
-            scrub: 1.2,
-            invalidateOnRefresh: true,
+        gsap.fromTo(
+          '.story__line',
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.4,
+            ease: 'expo.out',
+            scrollTrigger: { trigger: '.story__line', start: 'top 85%', once: true },
           },
-        })
-        .fromTo(
-          '.founder--girvani .founder__portrait',
-          { xPercent: -14, opacity: 0.75 },
-          { xPercent: 0, opacity: 1, ease: 'power2.out' },
-          0,
-        )
-        .fromTo(
-          '.founder--swapna .founder__portrait',
-          { xPercent: 14, opacity: 0.75 },
-          { xPercent: 0, opacity: 1, ease: 'power2.out' },
-          0,
-        )
-        .fromTo(
-          '.story__union',
-          { opacity: 0, scale: 0.94 },
-          { opacity: 1, scale: 1, ease: 'power2.out' },
-          0.55,
         );
-    }, el);
 
-    return () => ctx.revert();
+        // Each portrait opens from the bottom of its arch as it arrives.
+        gsap.fromTo(
+          '.founder__arch',
+          { clipPath: 'inset(100% 0% 0% 0%)' },
+          {
+            clipPath: 'inset(0% 0% 0% 0%)',
+            duration: 1.6,
+            ease: 'expo.inOut',
+            stagger: 0.15,
+            scrollTrigger: { trigger: '.story__pair', start: 'top 80%', once: true },
+          },
+        );
+
+        // …then the two drift together, scrubbed to the scroll.
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: '.story__pair',
+              start: 'top 75%',
+              end: 'center 50%',
+              scrub: 1.2,
+            },
+          })
+          .fromTo(
+            '.founder--girvani',
+            { xPercent: wide ? -16 : 0, yPercent: wide ? 0 : 6, rotate: wide ? -2 : 0 },
+            { xPercent: 0, yPercent: 0, rotate: 0, ease: 'power2.out' },
+            0,
+          )
+          .fromTo(
+            '.founder--swapna',
+            { xPercent: wide ? 16 : 0, yPercent: wide ? 10 : 6, rotate: wide ? 2 : 0 },
+            { xPercent: 0, yPercent: 0, rotate: 0, ease: 'power2.out' },
+            0,
+          )
+          .fromTo(
+            '.story__amp',
+            { opacity: 0, scale: 0.5, rotate: -12 },
+            { opacity: 1, scale: 1, rotate: 0, ease: 'back.out(1.6)' },
+            0.55,
+          );
+      },
+    );
+
+    return () => mm.revert();
   }, []);
 
   return (
-    <section className="section story" id="story" ref={root}>
+    <section className="section story" id="story" ref={root} aria-labelledby="story-title">
       <div className="shell">
         <header className="story__head">
-          <p className="micro">{story.journeyCaption}</p>
-          <RevealText lines={story.headline} as="h2" className="story__headline display" />
-          <Swoosh width={10} />
+          <div>
+            <p className="micro eyebrow">{story.label}</p>
+            <div className="story__title-wrap">
+              <RevealText lines={story.headline} as="h2" id="story-title" className="story__title display halo" />
+              <Swoosh width={8} />
+            </div>
+          </div>
+          <p className="story__line display halo">{story.line}</p>
         </header>
 
-        <div className="story__journey">
-          {story.journey.map((para) => (
-            <p key={para}>{para}</p>
-          ))}
-        </div>
-
-        <div className="story__founders">
+        <div className="story__pair">
           {founders.map((f) => (
-            <article className={`founder founder--${f.id}`} key={f.id}>
-              <div className="founder__portrait">
+            <figure className={`founder founder--${f.id}`} key={f.id}>
+              <div className="founder__arch">
                 <Figure
-                  src={f.portrait ?? ''}
-                  alt={`Portrait of ${f.name}, co-founder of BeyondBakes`}
+                  src={f.portrait}
+                  alt={`${f.name}, ${f.role.toLowerCase()} of BeyondBakes`}
                   ratio="4 / 5"
-                  placeholderLabel={`Portrait of ${f.name} — awaiting photograph`}
                 />
               </div>
-
-              <div className="founder__text">
-                <p className="micro" data-founder-reveal>
-                  {f.role}
-                </p>
-                <h3 className="founder__name display" data-founder-reveal>
-                  {f.name}
-                </h3>
-                <p className="founder__quote display" data-founder-reveal>
-                  &ldquo;{f.pullQuote}&rdquo;
-                </p>
-                <p className="founder__body body-muted" data-founder-reveal>
-                  {f.body}
-                </p>
+              <figcaption className="founder__caption">
+                <span className="sr-only">{f.name}, {f.role}. </span>
                 <a
-                  className="founder__handle micro link-underline"
+                  className="micro link-underline founder__handle"
                   href={`https://instagram.com/${f.handle}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  data-founder-reveal
                 >
-                  @{f.handle} ↗
+                  @{f.handle}
                 </a>
-              </div>
-            </article>
+              </figcaption>
+            </figure>
           ))}
 
-          {/* Settles between them once they have met. */}
-          <span className="story__union display" aria-hidden="true">
-            BeyondBakes
+          <span className="story__amp display" aria-hidden="true">
+            &amp;
           </span>
         </div>
       </div>

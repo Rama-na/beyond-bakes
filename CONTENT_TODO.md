@@ -5,60 +5,80 @@ This is the list of what is currently **sample copy** and what is still **missin
 
 ---
 
-## 1. Photographs — mostly supplied
+## 1. Photographs
 
-In place under `public/images/`:
+All six are in `public/images/`:
 
-| File | What it is |
-| --- | --- |
-| `signature-red-rose-cake.jpg` | Three-tier ivory cake with red garden roses. Used as the **hero**. |
-| `signature-art-cake.jpg` | Pastel palette-knife cake with cakesicles, waffle cone, cocoa spheres. |
-| `garden-floral-cake.jpg` | Pressed-flower tiered cake, close-up. |
-| `floral-event-cake.jpg` | The full floral celebration setup with the white arched plinth. |
-| `portrait-girvani.jpg` | Portrait of Girvani. |
+| File | What it is | Where it appears |
+| --- | --- | --- |
+| `signature-art-cake.jpg` | Pastel palette-knife cake, cakesicles and cone | **Hero**, carousel, craft, filmstrip |
+| `floral-event-cake.jpg` | The floral celebration, white arched plinth | Full-bleed reveal, carousel, craft, filmstrip |
+| `garden-floral-cake.jpg` | Pressed-flower tiered cake, close-up | Carousel, craft, filmstrip |
+| `signature-red-rose-cake.jpg` | Three tiers, red garden roses | Carousel, craft, filmstrip |
+| `portrait-girvani.jpg` | Girvani | Story, filmstrip |
+| `portrait-swapna.jpg` | Swapna | Story, filmstrip |
 
-| `portrait-swapna.jpg` | Portrait of Swapna. |
+### More photographs are the biggest single upgrade left
 
-All six are in place. Nothing is missing.
+Four cake photographs carry the whole page, so each appears three or four
+times. The filmstrip already re-crops them into close-ups to hide it, but real
+variety would lift the page more than any further design change. Adding one is
+a data change only — drop the file in `public/images/` and reference it from
+`bakes.ts`, `craft.ts` or `socialGallery.ts`. With eight or more, the filmstrip
+can take a second row drifting the other way (see the note in
+`socialGallery.ts`).
 
-### Two things worth a decision
+**Note:** a batch of new images was mentioned in the brief for this revision,
+but it did not arrive — nothing new reached the session or the repository.
+Resend and they will be sorted into the right places.
 
-- **The same four cake photographs carry the whole page.** With four images
-  across the hero, four signature cards, four craft sections and the Instagram
-  grid, each one appears three or four times — the red-rose cake most visibly.
-  More photographs would fix this immediately; the data layer needs no changes,
-  just new filenames in `bakes.ts` / `craft.ts` / `socialGallery.ts`.
-- **The red-rose cake carries a "Durai ♥ Monisha" topper.** That is real
-  commissioned work, which is fine to show. It is no longer the hero — the
-  pastel art cake took that slot, which also suits the "work of art" line — but
-  the topper is still visible in the carousel and the craft section.
+### The red-rose topper
+
+The red-rose cake carries a "Durai ♥ Monisha" topper. It is real commissioned
+work and fine to show; it is no longer the hero, but it is still visible in the
+carousel and the craft sequence.
 
 ---
 
 ## 2. Sample copy — written for the draft, needs approval
 
-All of this reads as real, finished copy. **None of it has been confirmed with
-Girvani and Swapna.** It exists so the site could be designed against real sentences
-instead of lorem ipsum.
+It reads as finished, but **none of it has been confirmed with Girvani and
+Swapna.** There is now very little of it — about a hundred words on the page —
+so approving it is a short job.
 
-### `src/data/story.ts` — the personal chapter
+### `src/data/brand.ts`
 
-Built on the one fact supplied: *they met in a baking class, became friends
-immediately, and started BeyondBakes together.* Everything around that fact —
-the Saturday morning, the sponge that refused to rise, the third Saturday, staying
-behind after class — is **invented for the draft**.
+- [ ] `manifesto` — "Every celebration has a feeling. We turn it into something you can taste."
+- [ ] `momentLine` — "Made for the moments worth remembering."
 
-- [ ] `story.journey` — the five-line origin story
-- [ ] `founders[].body` — the personal paragraph for each of them
-- [ ] `founders[].pullQuote` — the line beside each portrait
-- [ ] `founders[].role` — "Design & celebrations" / "Pastry chef"
-- [ ] `story.message.quote` — the "From us, to you" line
+### `src/data/story.ts`
+
+Built on the one supplied fact: *they met in a baking class, became friends
+straight away, and started BeyondBakes together.* "Over a sponge that refused
+to rise" is invented for the draft.
+
+- [ ] `headline` — "Two friends. One kitchen."
+- [ ] `line` — the one-sentence origin
+- [ ] `founders[].role` — used for screen readers and alt text only; the
+      visible roles are inside the portraits themselves
 - [ ] Set `STORY_IS_SAMPLE = false` once approved
+
+### `src/data/craft.ts`
+
+Four steps, a word and a line each. They describe a real pastry process, but
+not necessarily *this* kitchen's.
+
+- [ ] Detail — "Every flower, placed by hand."
+- [ ] Texture — "Buttercream combed in a single pass."
+- [ ] Time — "Rested overnight. Never rushed."
+- [ ] Balance — "It should taste as good as it looks."
+- [ ] Set `CRAFT_IS_SAMPLE = false` once approved
 
 ### `src/data/bakes.ts` — the menu
 
 The photographs are real work. The **names, flavours, ingredients, sizes and lead
-times are invented.** Every bake carries `isSample: true`.
+times are invented.** Every bake carries `isSample: true`. On the page only the
+name shows; the rest lives in the detail panel that opens from the carousel.
 
 - [ ] Cake names — currently *The Vow*, *Sundae Afternoon*, *Wildflower Season*,
       *The Glasshouse*
@@ -66,39 +86,19 @@ times are invented.** Every bake carries `isSample: true`.
 - [ ] `ingredients[]` — the quality details (these make specific claims: Madagascar
       vanilla, 82% cultured butter, single-origin white chocolate, no artificial
       colour). **Confirm or replace each one.**
-- [ ] `details[]` — the craft notes
+- [ ] `details[]` — kept in the data for a future product page; not shown at present
 - [ ] `sizes[]` — labels and serving counts
 - [ ] `leadTime` — currently 5 days / 3 weeks / 4–6 weeks
 - [ ] Set `isSample: false` per bake once approved
-
-### `src/data/craft.ts` — the process
-
-Describes a real pastry process, but not necessarily *this* kitchen's.
-
-- [ ] `craft.standfirst` — the claim that nothing is batched, frozen or bought in
-- [ ] The four sections: Detail, Time, Texture, Balance
-- [ ] Set `CRAFT_IS_SAMPLE = false` once approved
-
-### `src/data/brand.ts`
-
-- [ ] `brand.intro` and `brand.introSecondary` — the editorial opening
 
 ---
 
 ## 3. Signatures
 
-The "From us, to you" section currently sets each name in a script face
-(`kind: 'typeset'`). This is an honest visual stand-in — **not** an imitation of
-anyone's handwriting.
-
-To use the real signatures: scan them as transparent PNG or SVG, put them in
-`public/brand/`, and switch the entry in `src/data/story.ts`:
-
-```ts
-signature: { kind: 'image', src: '/brand/signature-girvani.svg', isSample: false }
-```
-
-The component handles both without further changes.
+The page no longer shows signatures — the two portraits already carry each
+founder's name in their own lettering, and a typeset stand-in beside them read
+as redundant. If scanned signatures are supplied, they would sit well under the
+portraits in the story section.
 
 ---
 
@@ -106,9 +106,10 @@ The component handles both without further changes.
 
 - [ ] **Instagram URL** — `brand.instagramUrl` is set to
       `https://instagram.com/beyondbakes.co`. Confirm this is the right account.
-- [ ] **Domain** — once confirmed, set the canonical URL and `og:url` in `index.html`.
+- [ ] **Domain** — currently `rama-na.github.io/beyond-bakes/`. If it moves, update
+      `canonical` / `og:url` in `index.html` and build with `VITE_BASE=/`.
 - [ ] **Logo** — the current mark is a frame extracted from the supplied animation
-      (`public/brand/logo-mark.png`, 960×960). If a vector or high-resolution original
+      (`public/brand/logo-mark.png`, 512×512). If a vector or high-resolution original
       exists, use that instead.
 - [ ] **Delivery / service area** — not stated anywhere on the site. Add if wanted.
 - [ ] **Lead time** — currently stated per cake. Confirm the real minimums.

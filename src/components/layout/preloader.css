@@ -6,6 +6,9 @@
   place-items: center;
   /* Matches the video's own pink ground so the edges disappear. */
   background: #eeb9c1;
+  /* Declared so the exit can tween it — the curtain lifts from the bottom. */
+  clip-path: inset(0% 0% 0% 0%);
+  will-change: clip-path;
 }
 
 .preloader__video {
@@ -14,6 +17,7 @@
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 50%;
+  will-change: transform, opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {

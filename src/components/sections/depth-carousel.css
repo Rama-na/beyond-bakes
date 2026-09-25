@@ -62,80 +62,76 @@
 /* ---- Readout ---- */
 
 .depth__readout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-areas:
-    'index    controls'
-    'name     controls'
-    'desc     controls';
-  align-items: center;
-  gap: 0.4rem 2rem;
-  padding-top: clamp(0.5rem, 2vw, 1.5rem);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-top: clamp(1rem, 2.5vw, 1.75rem);
   border-top: 1px solid var(--line-soft);
 }
 
-.depth__index {
-  grid-area: index;
-}
-.depth__name {
-  grid-area: name;
-}
-.depth__desc {
-  grid-area: desc;
-}
-.depth__controls {
-  grid-area: controls;
+.depth__label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
-.depth__readout .depth__index {
+.depth__index {
   color: var(--pink);
 }
 
 .depth__name {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 3.4vw, 3.25rem);
-  font-weight: 300;
+  font-size: clamp(2.2rem, 4.4vw, 4.2rem);
+  font-style: italic;
   line-height: 1;
-  letter-spacing: -0.025em;
-  /* Re-keyed per card, so it fades in on every change. */
-  animation: depthName 620ms var(--ease-out);
+  /* Re-keyed per card, so it rises in on every change. */
+  animation: depthName 900ms var(--ease-expo);
 }
 
 @keyframes depthName {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(14px);
+    filter: blur(6px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+    filter: blur(0);
   }
 }
 
-.depth__desc {
-  color: var(--muted-ink);
-  font-size: 0.95rem;
-  max-width: 34ch;
-}
-
-.depth__readout .depth__controls {
+.depth__actions {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 2rem;
+}
+
+.depth__explore {
+  color: var(--ink);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.depth__controls {
+  display: flex;
+  gap: 0.6rem;
 }
 
 .depth__arrow {
-  width: 46px;
-  height: 46px;
+  width: 52px;
+  height: 52px;
   border: 1px solid var(--line);
   border-radius: 999px;
   display: grid;
   place-items: center;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   transition:
-    background-color 380ms var(--ease-soft),
-    color 380ms var(--ease-soft),
-    border-color 380ms var(--ease-soft);
+    background-color 500ms var(--ease-soft),
+    color 500ms var(--ease-soft),
+    border-color 500ms var(--ease-soft);
 }
 
 .depth__arrow:hover,
@@ -143,12 +139,6 @@
   background: var(--ink);
   border-color: var(--ink);
   color: var(--cream);
-}
-
-.depth__hint {
-  margin-left: 0.5rem;
-  color: var(--muted-ink);
-  opacity: 0.75;
 }
 
 /* ---- Reduced motion / no-3D fallback: a plain readable list ---- */
@@ -190,26 +180,18 @@
   line-height: 1.1;
 }
 
-.depth[data-reduced='true'] .depth__card-desc {
-  color: var(--muted-ink);
-  font-size: 0.92rem;
-}
-
 /* ---- Mobile ---- */
 
 @media (max-width: 900px) {
   .depth__readout {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      'index'
-      'name'
-      'desc'
-      'controls';
-    gap: 0.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
   }
 
-  .depth__readout .depth__controls {
-    margin-top: 0.75rem;
+  .depth__actions {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .depth__stage {
@@ -221,7 +203,4 @@
     width: clamp(190px, 50vw, 250px);
   }
 
-  .depth__readout {
-    text-align: left;
-  }
 }

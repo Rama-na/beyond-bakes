@@ -8,6 +8,8 @@ interface RevealTextProps {
   lines: readonly string[];
   as?: ElementType;
   className?: string;
+  /** For sections that name themselves by this heading (aria-labelledby). */
+  id?: string;
   stagger?: number;
   start?: string;
   children?: ReactNode;
@@ -23,6 +25,7 @@ export function RevealText({
   lines,
   as: Tag = 'h2',
   className = '',
+  id,
   stagger = 0.09,
   start = 'top 82%',
 }: RevealTextProps) {
@@ -41,7 +44,7 @@ export function RevealText({
   }, [stagger, start]);
 
   return (
-    <Tag ref={root} className={`reveal-text ${className}`}>
+    <Tag ref={root} id={id} className={`reveal-text ${className}`}>
       {lines.map((line, i) => (
         <span className="reveal-line" key={i}>
           {/* The trailing space is collapsed visually by the block layout, but

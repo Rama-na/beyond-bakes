@@ -81,11 +81,11 @@ edit to change.
 
 | File | Holds |
 | --- | --- |
-| `brand.ts` | Name, location, tagline, Instagram handle + URL, intro copy |
+| `brand.ts` | Name, location, tagline, Instagram handle + URL, the manifesto line |
 | `bakes.ts` | The four signatures — names, flavours, ingredients, sizes, lead times |
-| `craft.ts` | Detail / Time / Texture / Balance |
-| `story.ts` | Girvani + Swapna — the journey, the founder paragraphs, signatures |
-| `socialGallery.ts` | The Instagram grid (hand-maintained, never scraped at runtime) |
+| `craft.ts` | Four steps — a word, a line and a photograph each |
+| `story.ts` | Girvani + Swapna — the headline, one sentence, the portraits |
+| `socialGallery.ts` | The filmstrip (hand-maintained, never scraped at runtime) |
 
 **Much of this is sample copy.** It reads as finished, but it has not been approved.
 `CONTENT_TODO.md` lists exactly which strings are invented and which facts were
@@ -146,16 +146,30 @@ The page alternates deliberately, because if everything moves nothing is
 special:
 
 ```
-QUIET      hero
-MOVEMENT   brand intro
-WOW        the photograph opens to full bleed
-PLAY       signature bakes, turned by hand
-—          the craft, read rather than watched
-INTIMATE   Girvani and Swapna meet
-QUIET      from us, to you
-MOVEMENT   the wall drifts
-QUIET      the ask
+QUIET      hero — the arch rises out of the page, the name follows it up
+MOVEMENT   one sentence, each word filled in as it is read
+WOW        the arch opens all the way to the whole celebration
+PLAY       the signatures, turned by hand in real depth
+SEQUENCE   the craft — four words, pinned, snapping step to step
+INTIMATE   two friends drift together; an ampersand settles between them
+MOVEMENT   the filmstrip drifts, faster when you scroll
+QUIET      the ask, then the name set as wide as the page
 ```
+
+### Words
+
+The page carries roughly a hundred words of its own. That is deliberate: the
+photography persuades, and the type only names things. Detail lives one click
+away, in the bake panel — where someone looking for it will find it — rather
+than on the page, where everyone else has to scroll past it.
+
+### The arch
+
+Their own photography is full of arches — the plinths, the backdrops, the
+doorway behind both portraits — so it became the page's frame shape
+(`--arch` in `globals.css`). The hero opens in an arch, the full-bleed reveal
+starts as one, the portraits sit in them, and the filmstrip alternates them
+with plain frames.
 
 ### Reduced motion
 
@@ -164,10 +178,13 @@ QUIET      the ask
 - Lenis is never instantiated
 - The brand preloader is skipped entirely
 - The thread is present but already drawn — no scroll-linked motion
-- The depth carousel becomes a plain, readable grid of labelled cards
+- The hero shows its finished composition; nothing rises
+- The manifesto is simply set, not filled in word by word
 - The full-bleed reveal renders as its finished state, unpinned
-- The portraits do not travel; the gallery does not drift
-- Reveals degrade to a short fade
+- The depth carousel becomes a plain, readable grid of labelled cards
+- The craft sequence unpins and stacks its four steps
+- The portraits do not travel; the filmstrip does not drift, and renders each
+  photograph once rather than as a looping strip
 
 ---
 
@@ -258,20 +275,29 @@ src/
   components/
     layout/      Navbar, Footer, Preloader
     hero/        Hero
-    sections/    BrandIntro, ScrollExpand, SignatureShowcase, DepthCarousel,
-                 BakeDetail, CraftSection, StorySection, SignatureMessage,
-                 SocialGallery, OrderCTA
+    sections/    Manifesto, ScrollExpand, SignatureShowcase, DepthCarousel,
+                 BakeDetail, CraftSequence, StorySection, Gallery, OrderCTA
     ordering/    OrderPanel, EnquiryForm, InstagramHandoff
-    motion/      BrandThread, Swoosh, RevealText, ParallaxImage, MagneticButton
+    motion/      BrandThread, Swoosh, RevealText, MagneticButton
     common/      Figure, Cursor, Grain
   data/          brand, bakes, craft, story, socialGallery
   hooks/         useLenis, useReducedMotion
-  lib/           animations, instagram
-  styles/        globals.css
+  lib/           animations, instagram, asset
+  styles/        fonts, globals
 ```
 
 Each component keeps its own CSS file beside it. Tokens, resets and the shared
-button/type primitives are in `styles/globals.css`.
+button/type primitives are in `styles/globals.css`, which `main.tsx` imports
+*before* `App` — so the base lands first in the bundle and a component rule
+wins any specificity tie with a global one. (Imported after, the globals won
+instead, and silently overrode every component's line-height on display type.)
+
+## Type
+
+Cormorant Garamond for display, Manrope for interface — both self-hosted from
+`@fontsource`, Latin subset only, declared in `styles/fonts.css`. There is no
+request to Google: no third-party round trip, no flash of fallback type, and
+the page renders identically behind networks that block Google Fonts.
 
 ## Colour
 
