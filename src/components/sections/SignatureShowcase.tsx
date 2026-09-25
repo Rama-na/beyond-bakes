@@ -10,19 +10,19 @@ interface SignatureShowcaseProps {
 }
 
 /**
- * PLAY.
+ * PLAY — chef's specials.
  *
- * One word for a heading, then the cakes themselves in real depth. Names and
+ * The showpiece cakes, straight after the hero, in real depth. Names and
  * details live in the readout and the detail panel — the section itself lets
  * the photography do the talking.
  */
 export function SignatureShowcase({ onOpenBake }: SignatureShowcaseProps) {
   return (
-    <section className="section sigs" id="signatures" aria-labelledby="sigs-title">
+    <section className="section sigs" id="specials" aria-labelledby="sigs-title">
       <div className="shell">
         <header className="sigs__head">
           <p className="micro eyebrow">
-            Signatures <span className="sigs__count">({String(bakes.length).padStart(2, '0')})</span>
+            Chef&rsquo;s specials <span className="sigs__count">({String(bakes.length).padStart(2, '0')})</span>
           </p>
           <div>
             <RevealText lines={['The ones we', 'come back to.']} as="h2" id="sigs-title" className="sigs__title display halo" />

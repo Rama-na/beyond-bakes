@@ -94,7 +94,7 @@ export function StorySection() {
   }, []);
 
   return (
-    <section className="section story" id="story" ref={root} aria-labelledby="story-title">
+    <section className="section story" id="about" ref={root} aria-labelledby="story-title">
       <div className="shell">
         <header className="story__head">
           <div>

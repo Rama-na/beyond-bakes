@@ -17,15 +17,16 @@ function splitName(name: string) {
 }
 
 /**
- * PAUSE — the dessert table.
+ * PAUSE — best sellers, from the dessert table.
  *
- * Straight after the signatures, and set like BeyondBakes' own menu card: the
+ * Straight after the full-bleed reveal of the dessert cart, and set like
+ * BeyondBakes' own menu card: the
  * title stacked and centred, each name with its last word in italic, the
  * card's lines as written. Four arches stand at two heights, like the plinths
  * on the real table.
  *
  * It moves once — each arch blooms open from its crown as the table comes into
- * view — then keeps still: a breath between the carousel and the pinned craft.
+ * view — then keeps still: a breath after the pinned reveal.
  */
 export function SweetIndulgences({ onOpenBake }: SweetIndulgencesProps) {
   const root = useRef<HTMLElement>(null);
@@ -69,11 +70,11 @@ export function SweetIndulgences({ onOpenBake }: SweetIndulgencesProps) {
   }, []);
 
   return (
-    <section className="section sweets" id="dessert-table" ref={root} aria-labelledby="sweets-title">
+    <section className="section sweets" id="best-sellers" ref={root} aria-labelledby="sweets-title">
       <div className="shell">
         <header className="sweets__head">
           <p className="micro eyebrow">
-            The dessert table{' '}
+            Best sellers{' '}
             <span className="sweets__count">({String(indulgences.length).padStart(2, '0')})</span>
           </p>
           <RevealText

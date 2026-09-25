@@ -5,10 +5,10 @@ import { asset } from '../../lib/asset';
 import './navbar.css';
 
 const LINKS = [
-  { label: 'Signatures', target: '#signatures' },
-  { label: 'Dessert table', target: '#dessert-table' },
-  { label: 'The craft', target: '#craft' },
-  { label: 'Our story', target: '#story' },
+  { label: "Chef's specials", target: '#specials' },
+  { label: 'Best sellers', target: '#best-sellers' },
+  { label: 'About us', target: '#about' },
+  { label: 'Gallery', target: '#gallery' },
 ];
 
 interface NavbarProps {

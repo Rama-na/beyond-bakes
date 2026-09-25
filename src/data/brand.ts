@@ -21,6 +21,7 @@ export const brand = {
    * SAMPLE — the one statement the page makes about itself. Kept to a single
    * sentence on purpose: the photography does the persuading.
    */
+  /** Not shown at present — the page went straight to the work. Kept for later use. */
   manifesto: 'Every celebration has a feeling. We turn it into something you can taste.',
 
   /** SAMPLE — the caption over the full-bleed photograph. */

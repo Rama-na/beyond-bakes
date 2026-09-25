@@ -29,7 +29,7 @@ import './brand-thread.css';
  */
 
 /**
- * Weaves through: hero → intro → reveal → signatures → craft → story → social → CTA.
+ * Weaves through: hero → specials → about → reveal → best sellers → kind words → gallery → CTA.
  *
  * Fifteen segments rather than a handful: the page is many viewports tall, so a
  * gentle whole-page S would present as a straight vertical line on any single

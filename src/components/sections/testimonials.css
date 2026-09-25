@@ -1,0 +1,147 @@
+.words__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.words__stage {
+  position: relative;
+  width: 100%;
+  max-width: 980px;
+  margin-top: clamp(1.5rem, 4vw, 3rem);
+}
+
+.words__mark {
+  display: block;
+  font-size: clamp(5rem, 11vw, 9rem);
+  line-height: 0.5;
+  height: 0.42em;
+  color: var(--pink);
+  font-style: italic;
+}
+
+/* Every quote shares one cell, so the section is as tall as the longest and
+   never jumps as they change. */
+.words__slides {
+  display: grid;
+}
+
+.words__slide {
+  grid-area: 1 / 1;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  filter: blur(6px);
+  transition:
+    opacity 900ms var(--ease-soft),
+    transform 1100ms var(--ease-expo),
+    filter 900ms var(--ease-soft),
+    visibility 0s linear 900ms;
+}
+
+.words__slide[data-active='true'] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  filter: none;
+  transition-delay: 0s;
+}
+
+.words__quote {
+  font-size: clamp(1.9rem, 4.2vw, 3.6rem);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.14;
+  letter-spacing: -0.02em;
+  max-width: 24ch;
+}
+
+.words__by {
+  color: var(--deep-rose);
+}
+
+/* ---- Controls ---- */
+
+.words__controls {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+.words__arrow {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 0.9rem;
+  transition:
+    background-color 500ms var(--ease-soft),
+    color 500ms var(--ease-soft),
+    border-color 500ms var(--ease-soft);
+}
+
+.words__arrow:hover,
+.words__arrow:focus-visible {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--cream);
+}
+
+.words__count {
+  color: var(--muted);
+  min-width: 4.5em;
+}
+
+/* The thread as a timer: it fills while a quote is on screen. */
+.words__line {
+  position: relative;
+  width: clamp(4rem, 12vw, 7rem);
+  height: 1px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.words__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--deep-rose);
+  transform-origin: left center;
+  animation: wordsTimer linear forwards;
+}
+
+.words__fill[data-paused='true'] {
+  animation-play-state: paused;
+}
+
+@keyframes wordsTimer {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.words__sample {
+  margin-top: 1.75rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .words__slide {
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}

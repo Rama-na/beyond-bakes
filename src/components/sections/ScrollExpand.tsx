@@ -8,9 +8,10 @@ import './scroll-expand.css';
  * WOW.
  *
  * The same arch the hero opened with, now opening all the way. It begins as a
- * small arched window onto the cake and, pinned, widens until the whole
+ * small arched window onto the dessert cart and, pinned, widens until the whole
  * celebration fills the screen — the arch flattening into the edges of the
- * viewport as it goes. One line of type arrives only once the room is visible.
+ * viewport as it goes — then hands over to the best sellers set out on it.
+ * Pinned only briefly: long enough to feel, not long enough to wait through.
  */
 export function ScrollExpand() {
   const root = useRef<HTMLElement>(null);
@@ -34,7 +35,7 @@ export function ScrollExpand() {
           scrollTrigger: {
             trigger: el,
             start: 'top top',
-            end: '+=130%',
+            end: '+=85%',
             pin: true,
             scrub: 1.2,
             invalidateOnRefresh: true,

@@ -7,7 +7,7 @@ This is the list of what is currently **sample copy** and what is still **missin
 
 ## 1. Photographs
 
-Twenty-three photographs are in `public/images/`; nineteen are in use, four of
+Twenty-three photographs are in `public/images/`; eighteen are in use, four of
 them the dessert-table crops. The full inventory — what each one is and where
 it appears — is in `public/images/README.md`.
 
@@ -16,11 +16,11 @@ BeyondBakes does whole dessert tables, not just cakes. The white dessert cart
 is the full-bleed reveal, their dessert menu has its own section, and the
 event work fills the filmstrip's second row.
 
-### Sweet Indulgences — the dessert-table menu, now on the site
+### Sweet Indulgences — shown as the Best sellers
 
 The event photographs show BeyondBakes' own **"Sweet Indulgences"** menu card.
-It now has its own section straight after the signatures (and a *Dessert
-table* link in the nav), in `src/data/indulgences.ts`, copied word for word:
+It is the **Best sellers** section (and nav link), in `src/data/indulgences.ts`,
+copied word for word:
 
 - **Cupcake Royale** — Delightful vanilla cupcakes with buttercream frosting
 - **Strawberry Dream** — Light and airy strawberry mousse, perfect for a summer day
@@ -31,9 +31,12 @@ table* link in the nav), in `src/data/indulgences.ts`, copied word for word:
 "rustic *baked* finish". Read at full resolution, the card says "rustic
 *naked* finish", and the site uses the card's wording.
 
-This is supplied, not sample (`isSample: false`). Two things are still to
+This is supplied, not sample (`isSample: false`). Three things are still to
 confirm:
 
+- [ ] **Are these the best sellers?** The section is labelled that way because
+      it was asked for; the label is ours, not theirs. If other bakes sell
+      more, swap them in.
 - [ ] **Which photograph goes with which name.** The pairing is read from the
       table — cupcakes, pink mousse, blueberry cheesecake glasses, chocolate
       naked cakes — not supplied.
@@ -46,7 +49,7 @@ confirm:
 
 The red-rose cake carries a "Durai ♥ Monisha" topper. It is real commissioned
 work and fine to show; it is no longer the hero, but it is still visible in the
-carousel and the craft sequence.
+chef's specials carousel.
 
 ---
 
@@ -58,8 +61,8 @@ so approving it is a short job.
 
 ### `src/data/brand.ts`
 
-- [ ] `manifesto` — "Every celebration has a feeling. We turn it into something you can taste."
-- [ ] `momentLine` — "Made for the moments worth remembering."
+- [ ] `momentLine` — "Made for the moments worth remembering." (over the full-bleed reveal)
+- `manifesto` — not shown since the page was shortened; kept in the data for later
 
 ### `src/data/story.ts`
 
@@ -73,16 +76,19 @@ to rise" is invented for the draft.
       visible roles are inside the portraits themselves
 - [ ] Set `STORY_IS_SAMPLE = false` once approved
 
-### `src/data/craft.ts`
+### `src/data/testimonials.ts` — Kind words
 
-Four steps, a word and a line each. They describe a real pastry process, but
-not necessarily *this* kitchen's.
+**Four sample quotes, written for the preview. No customer said them.** They
+carry no names, only an occasion, and while `TESTIMONIALS_ARE_SAMPLE` is true
+the section says on the page that they are samples.
 
-- [ ] Detail — "Every flower, placed by hand."
-- [ ] Texture — "Buttercream combed in a single pass."
-- [ ] Time — "Set overnight. Never rushed."
-- [ ] Balance — "It should taste as good as it looks."
-- [ ] Set `CRAFT_IS_SAMPLE = false` once approved
+- [ ] Collect three or four real ones — Instagram DMs and comments are the
+      obvious source — **with the customer's permission to quote them**
+- [ ] Replace the quotes; add a first name to `occasion` if the customer agrees
+- [ ] Set `TESTIMONIALS_ARE_SAMPLE = false` — the sample note disappears
+
+The pinned craft section (Detail, Texture, Time, Balance) was cut when the page
+was shortened; its copy is in git history if it is wanted again.
 
 ### `src/data/ordering.ts` — after an enquiry
 
@@ -95,8 +101,9 @@ confirmed:
 - [ ] "Then it's made, for your day."
 - [ ] Set `AFTER_ENQUIRY_IS_SAMPLE = false` once approved
 
-### `src/data/bakes.ts` — the menu
+### `src/data/bakes.ts` — the chef's specials
 
+Shown as **Chef's specials** — the label is ours, as asked for; confirm it suits.
 The photographs are real work. The **names, flavours, ingredients, sizes and lead
 times are invented.** Every bake carries `isSample: true`. On the page only the
 name shows; the rest lives in the detail panel that opens from the carousel.

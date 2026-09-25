@@ -4,8 +4,12 @@ The launch site for BeyondBakes — a Chennai-based pastry brand by Girvani and 
 
 A single cinematic page built around one journey:
 
-> Discover → fall for the work → meet Girvani & Swapna → understand the craft →
-> choose a bake → *let's make it personal* → enquiry → Instagram DM
+> Discover → fall for the work → meet Girvani & Swapna → choose a bake →
+> hear from others → *let's make it personal* → enquiry → Instagram DM
+
+Five sections carry it, kept short so no one gets bored on the way down:
+**Chef's specials**, **About us**, **Best sellers**, **Kind words** (testimonials)
+and the **Gallery**.
 
 There is no cart and no checkout, by design. Orders are taken personally at launch.
 The product model is already shaped for checkout, so adding it later does not mean
@@ -82,9 +86,9 @@ edit to change.
 | File | Holds |
 | --- | --- |
 | `brand.ts` | Name, location, tagline, Instagram handle + URL, the manifesto line |
-| `bakes.ts` | The four signatures — names, flavours, ingredients, sizes, lead times |
-| `indulgences.ts` | The dessert-table menu, "Sweet Indulgences" — word for word from their own menu card |
-| `craft.ts` | Four steps — a word, a line and a photograph each |
+| `bakes.ts` | The four chef's specials — names, flavours, ingredients, sizes, lead times |
+| `indulgences.ts` | The best sellers: their "Sweet Indulgences" menu, word for word from the card |
+| `testimonials.ts` | Kind words — **sample quotes** until real ones are supplied; the page says so |
 | `story.ts` | Girvani + Swapna — the headline, one sentence, the portraits |
 | `socialGallery.ts` | The filmstrip (hand-maintained, never scraped at runtime) |
 
@@ -148,15 +152,19 @@ special:
 
 ```
 QUIET      hero — the arch rises out of the page, the name follows it up
-MOVEMENT   one sentence, each word filled in as it is read
-WOW        the arch opens all the way to the whole celebration
-PLAY       the signatures, turned by hand in real depth
-PAUSE      the dessert table — four arches bloom open once, then keep still
-SEQUENCE   the craft — four words, pinned, snapping step to step
-INTIMATE   two friends drift together; an ampersand settles between them
+PLAY       chef's specials, turned by hand in real depth
+INTIMATE   about us — two friends drift together; an ampersand settles
+WOW        the arch opens all the way onto the dessert cart…
+PAUSE      …and its best sellers, four arches that bloom open once
+QUIET      kind words, one large quote at a time
 MOVEMENT   the filmstrip drifts, faster when you scroll
 QUIET      the ask, then the name set as wide as the page
 ```
+
+Earlier drafts also had a one-sentence manifesto and a pinned four-step craft
+sequence. Both were cut to keep the page to the point: it is now about ten
+screens on desktop, down from fifteen. The only pinned moment left is the
+reveal, and it holds for less than a screen.
 
 ### Words
 
@@ -181,11 +189,10 @@ them, and the filmstrip alternates them with plain frames.
 - The brand preloader is skipped entirely
 - The thread is present but already drawn — no scroll-linked motion
 - The hero shows its finished composition; nothing rises
-- The manifesto is simply set, not filled in word by word
 - The full-bleed reveal renders as its finished state, unpinned
 - The depth carousel becomes a plain, readable grid of labelled cards
 - The dessert-table arches are simply there; nothing blooms open
-- The craft sequence unpins and stacks its four steps
+- The kind words do not advance on their own; the arrows move them
 - The portraits do not travel; the filmstrip does not drift, and renders each
   photograph once rather than as a looping strip
 
@@ -308,13 +315,13 @@ src/
   components/
     layout/      Navbar, Footer, Preloader
     hero/        Hero
-    sections/    Manifesto, ScrollExpand, SignatureShowcase, DepthCarousel,
-                 SweetIndulgences, BakeDetail, CraftSequence, StorySection,
-                 Gallery, OrderCTA
+    sections/    SignatureShowcase (chef's specials), DepthCarousel, StorySection
+                 (about us), ScrollExpand, SweetIndulgences (best sellers),
+                 Testimonials, Gallery, OrderCTA, BakeDetail
     ordering/    OrderPanel, EnquiryForm, InstagramHandoff (review), EnquirySent
     motion/      BrandThread, Swoosh, RevealText, MagneticButton
     common/      Figure, Cursor, Grain
-  data/          brand, bakes, indulgences, craft, story, socialGallery, ordering
+  data/          brand, bakes, indulgences, testimonials, story, socialGallery, ordering
   hooks/         useLenis, useReducedMotion
   lib/           animations, instagram, asset
   styles/        fonts, globals

@@ -9,13 +9,12 @@ import { Cursor } from './components/common/Cursor';
 import { Grain } from './components/common/Grain';
 import { BrandThread } from './components/motion/BrandThread';
 import { Hero } from './components/hero/Hero';
-import { Manifesto } from './components/sections/Manifesto';
 import { ScrollExpand } from './components/sections/ScrollExpand';
 import { SignatureShowcase } from './components/sections/SignatureShowcase';
 import { SweetIndulgences } from './components/sections/SweetIndulgences';
 import { BakeDetail } from './components/sections/BakeDetail';
-import { CraftSequence } from './components/sections/CraftSequence';
 import { StorySection } from './components/sections/StorySection';
+import { Testimonials } from './components/sections/Testimonials';
 import { Gallery } from './components/sections/Gallery';
 import { OrderCTA } from './components/sections/OrderCTA';
 import { OrderPanel } from './components/ordering/OrderPanel';
@@ -67,12 +66,11 @@ export default function App() {
         nothing is special:
 
           QUIET     hero — the arch rises, the name follows
-          MOVEMENT  one sentence, filled in as it is read
-          WOW       the arch opens to the whole celebration
-          PLAY      the signatures, turned by hand
-          PAUSE     the dessert table — four arches open once, then keep still
-          SEQUENCE  the craft — four words, pinned
-          INTIMATE  two friends drift together
+          PLAY      chef's specials, turned by hand
+          INTIMATE  about us — two friends drift together
+          WOW       the arch opens onto the dessert table…
+          PAUSE     …and its best sellers, set out once
+          QUIET     kind words, one at a time
           MOVEMENT  the wall drifts
           QUIET     the ask, and the name, very large
 
@@ -83,12 +81,11 @@ export default function App() {
 
         <main id="main" className="page__content">
           <Hero ready={ready} />
-          <Manifesto />
-          <ScrollExpand />
           <SignatureShowcase onOpenBake={setActiveBake} />
-          <SweetIndulgences onOpenBake={setActiveBake} />
-          <CraftSequence />
           <StorySection />
+          <ScrollExpand />
+          <SweetIndulgences onOpenBake={setActiveBake} />
+          <Testimonials />
           <Gallery />
           <OrderCTA onStartOrder={() => openOrder()} />
         </main>

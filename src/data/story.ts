@@ -39,7 +39,7 @@ export const founders: Founder[] = [
 ];
 
 export const story = {
-  label: 'How it began',
+  label: 'About us',
   headline: ['Two friends.', 'One kitchen.'],
   /** SAMPLE — built on the supplied fact. One sentence, no more. */
   line: 'They met in a baking class, over a sponge that refused to rise — and have baked together ever since.',

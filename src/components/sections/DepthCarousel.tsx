@@ -146,7 +146,7 @@ export function DepthCarousel({ onOpenBake }: DepthCarouselProps) {
         onKeyDown={onKey}
         role="group"
         aria-roledescription="carousel"
-        aria-label="Signature bakes"
+        aria-label="Chef's specials"
         tabIndex={reduced ? -1 : 0}
         data-cursor="drag"
       >

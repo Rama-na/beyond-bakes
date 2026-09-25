@@ -52,7 +52,7 @@
 
   /* Space */
   --gutter: clamp(1.25rem, 4.5vw, 4.5rem);
-  --section-y: clamp(7rem, 18vh, 14rem);
+  --section-y: clamp(5.5rem, 14vh, 11rem);
 
   /* Motion — long, soft deceleration. Nothing on this page should snap. */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);

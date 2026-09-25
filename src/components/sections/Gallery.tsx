@@ -94,7 +94,7 @@ export function Gallery() {
   }, [reduced]);
 
   return (
-    <section className="gallery" ref={root} aria-labelledby="gallery-title">
+    <section className="gallery" id="gallery" ref={root} aria-labelledby="gallery-title">
       <div className="shell gallery__head">
         <p className="micro eyebrow">On Instagram</p>
         <h2 className="gallery__title display halo" id="gallery-title">

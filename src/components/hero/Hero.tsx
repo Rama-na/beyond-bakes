@@ -148,7 +148,7 @@ export function Hero({ ready }: HeroProps) {
         <button
           className="hero__cue micro"
           data-hero-in
-          onClick={() => scrollTo('#manifesto', -40)}
+          onClick={() => scrollTo('#specials', -40)}
           aria-label="Scroll to discover"
         >
           Scroll
