@@ -28,6 +28,7 @@
 }
 
 .order__bar {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -37,7 +38,65 @@
   flex-shrink: 0;
 }
 
+/* ---------- Progress: three steps and the thread under them ---------- */
+
+.order__steps {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.order__steps li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--muted);
+  opacity: 0.5;
+  transition:
+    color 500ms var(--ease-soft),
+    opacity 500ms var(--ease-soft);
+}
+
+/* A short rule between steps. */
+.order__steps li + li::before {
+  content: '';
+  width: 1.1rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.order__steps li[data-state='current'] {
+  color: var(--ink);
+  opacity: 1;
+}
+
+.order__steps li[data-state='done'] {
+  color: var(--deep-rose);
+  opacity: 1;
+}
+
+/* The thread again, run along the bar as far as you have got. */
+.order__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--deep-rose);
+  transform-origin: left center;
+  transform: scaleX(var(--progress, 0));
+  transition: transform 1100ms var(--ease-expo);
+}
+
 .order__close {
+  flex-shrink: 0;
   width: 44px;
   height: 44px;
   border-radius: 999px;
@@ -62,6 +121,11 @@
   overscroll-behavior: contain;
   padding: clamp(1.75rem, 4vw, 2.75rem);
   padding-bottom: max(clamp(1.75rem, 4vw, 2.75rem), env(safe-area-inset-bottom));
+}
+
+/* Each step arrives with a short rise. */
+.order__step {
+  animation: orderStep 560ms var(--ease-out);
 }
 
 .order__intro {
@@ -188,7 +252,6 @@
   display: flex;
   flex-direction: column;
   gap: 1.35rem;
-  animation: orderFade 460ms var(--ease-soft);
 }
 
 .handoff__title {
@@ -210,6 +273,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  margin: 0;
 }
 
 .handoff__message {
@@ -234,6 +298,23 @@
   gap: 0.75rem;
 }
 
+.handoff__send[aria-disabled='true'] {
+  cursor: progress;
+}
+
+.handoff__dots span {
+  opacity: 0.2;
+  animation: sendDot 1.2s var(--ease-soft) infinite;
+}
+
+.handoff__dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.handoff__dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
 .handoff__fallback {
   font-size: 0.8rem;
   color: var(--muted-ink);
@@ -248,12 +329,163 @@
   align-items: center;
 }
 
+.handoff__back[aria-disabled='true'] {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ---------- Sent ---------- */
+
+.sent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+/* The thread draws a ring, then the tick inside it. */
+.sent__mark {
+  width: 56px;
+  height: 56px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  margin-bottom: 0.25rem;
+}
+
+.sent__ring {
+  stroke: var(--pink);
+  stroke-width: 1.25;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  /* Start the ring at twelve o'clock rather than three. */
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: sentDraw 1100ms var(--ease-expo) 150ms forwards;
+}
+
+.sent__tick {
+  stroke: var(--deep-rose);
+  stroke-width: 1.75;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sentDraw 700ms var(--ease-out) 750ms forwards;
+}
+
+.sent__title {
+  font-size: clamp(2rem, 5vw, 2.9rem);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+}
+
+.sent__title em {
+  color: var(--deep-pink);
+}
+
+.sent__lede {
+  font-size: 0.95rem;
+}
+
+/* In preview mode, said in the reading order rather than as small print. */
+.sent__preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--blush-deep);
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--blush) 38%, var(--background));
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.sent__preview .micro {
+  color: var(--deep-rose);
+}
+
+.sent__next {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.sent__next ol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.sent__next li {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.sent__num {
+  flex-shrink: 0;
+  font-family: var(--font-sans);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--pink);
+}
+
+.sent__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.75rem;
+  margin-top: 0.5rem;
+}
+
+.sent__again {
+  color: var(--muted-ink);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
 @keyframes orderFade {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes orderStep {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes sendDot {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+@keyframes sentDraw {
+  to {
+    stroke-dashoffset: 0;
   }
 }
 
@@ -284,7 +516,8 @@
     grid-template-columns: 1fr;
   }
 
-  .handoff__actions .btn {
+  .handoff__actions .btn,
+  .sent__actions .btn {
     width: 100%;
     justify-content: center;
   }
@@ -304,10 +537,41 @@
   }
 }
 
+/* The smallest phones: tighten the progress so it stays on one line. */
+@media (max-width: 380px) {
+  .order__steps,
+  .order__steps li {
+    gap: 0.5rem;
+  }
+
+  .order__steps li {
+    letter-spacing: 0.14em;
+  }
+
+  .order__steps li + li::before {
+    width: 0.7rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .order__panel,
   .order__backdrop,
-  .handoff {
+  .order__step {
     animation: none;
+  }
+
+  .order__progress {
+    transition: none;
+  }
+
+  .sent__ring,
+  .sent__tick {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .handoff__dots span {
+    animation: none;
+    opacity: 1;
   }
 }

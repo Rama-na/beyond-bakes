@@ -1,9 +1,13 @@
 import { useState, type FormEvent } from 'react';
 import type { EnquiryPayload } from '../../lib/instagram';
+import { allBakes } from '../../data/bakes';
+import { ORDER_MODE } from '../../data/ordering';
 
 interface EnquiryFormProps {
   /** Pre-fills "What are you looking for?" when opened from a bake. */
   initialRequest?: string;
+  /** Everything already typed, when coming back from the review. */
+  initialValues?: EnquiryPayload;
   onSubmit: (payload: EnquiryPayload) => void;
 }
 
@@ -16,17 +20,22 @@ function todayISO() {
   return new Date(d.getTime() - tz).toISOString().slice(0, 10);
 }
 
-export function EnquiryForm({ initialRequest = '', onSubmit }: EnquiryFormProps) {
-  const [values, setValues] = useState<EnquiryPayload>({
-    name: '',
-    request: initialRequest,
-    date: '',
-    size: '',
-    message: '',
-    instagram: '',
-    phone: '',
-  });
+export function EnquiryForm({ initialRequest = '', initialValues, onSubmit }: EnquiryFormProps) {
+  const [values, setValues] = useState<EnquiryPayload>(
+    () =>
+      initialValues ?? {
+        name: '',
+        request: initialRequest,
+        date: '',
+        size: '',
+        message: '',
+        instagram: '',
+        phone: '',
+      },
+  );
   const [errors, setErrors] = useState<Errors>({});
+  // Coming back with contact details filled in: show them, don't hide them.
+  const [contactOpen] = useState(() => Boolean(initialValues?.instagram || initialValues?.phone));
 
   const set = (key: keyof EnquiryPayload) => (e: { target: { value: string } }) => {
     setValues((v) => ({ ...v, [key]: e.target.value }));
@@ -81,6 +90,8 @@ export function EnquiryForm({ initialRequest = '', onSubmit }: EnquiryFormProps)
           name="request"
           type="text"
           placeholder="A birthday cake, a wedding tier, something else entirely…"
+          list="enq-suggestions"
+          autoComplete="off"
           value={values.request}
           onChange={set('request')}
           aria-invalid={Boolean(errors.request)}
@@ -92,6 +103,12 @@ export function EnquiryForm({ initialRequest = '', onSubmit }: EnquiryFormProps)
             {errors.request}
           </p>
         )}
+        {/* Every bake on the page, offered as you type — free text still works. */}
+        <datalist id="enq-suggestions">
+          {allBakes().map((b) => (
+            <option key={b.id} value={`${b.name} — ${b.referenceLabel}`} />
+          ))}
+        </datalist>
       </div>
 
       <div className="enq__row">
@@ -133,7 +150,7 @@ export function EnquiryForm({ initialRequest = '', onSubmit }: EnquiryFormProps)
         />
       </div>
 
-      <details className="enq__optional">
+      <details className="enq__optional" open={contactOpen}>
         <summary>Add a way to reach you (optional)</summary>
         <div className="enq__row enq__row--optional">
           <div className="enq__field">
@@ -170,8 +187,9 @@ export function EnquiryForm({ initialRequest = '', onSubmit }: EnquiryFormProps)
       </button>
 
       <p className="enq__note">
-        Nothing is sent anywhere yet — the next step hands this to you as a message you
-        can send us on Instagram.
+        {ORDER_MODE === 'preview'
+          ? 'Nothing is sent yet — you’ll see your whole message before it goes.'
+          : 'Nothing is sent anywhere yet — the next step hands this to you as a message you can send us on Instagram.'}
       </p>
     </form>
   );

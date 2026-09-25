@@ -84,6 +84,17 @@ not necessarily *this* kitchen's.
 - [ ] Balance — "It should taste as good as it looks."
 - [ ] Set `CRAFT_IS_SAMPLE = false` once approved
 
+### `src/data/ordering.ts` — after an enquiry
+
+The confirmation at the end of *Start an order* says what happens next. It is
+drafted from the brief (orders are taken personally, over Instagram), not
+confirmed:
+
+- [ ] "We reply on Instagram."
+- [ ] "We talk it through — flavour, design, your date."
+- [ ] "Then it's made, for your day."
+- [ ] Set `AFTER_ENQUIRY_IS_SAMPLE = false` once approved
+
 ### `src/data/bakes.ts` — the menu
 
 The photographs are real work. The **names, flavours, ingredients, sizes and lead
@@ -114,6 +125,10 @@ portraits in the story section.
 
 ## 4. Still to confirm
 
+- [ ] **Go live: `ORDER_MODE`** — the proof of concept runs the order journey in
+      `'preview'`: it plays through to the confirmation and sends nothing. Before
+      launch, set it to `'instagram'` in `src/data/ordering.ts` so *Send* copies
+      the enquiry and opens the DMs.
 - [ ] **Instagram URL** — `brand.instagramUrl` is set to
       `https://instagram.com/beyondbakes.co`. Confirm this is the right account.
 - [ ] **Domain** — currently `rama-na.github.io/beyond-bakes/`. If it moves, update

@@ -103,6 +103,9 @@ export function BakeDetail({ bake, onClose, onEnquire }: BakeDetailProps) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="detail-title"
+        // Lenis cancels wheel and touch scrolling while the page is locked;
+        // this lets the panel scroll natively underneath it.
+        data-lenis-prevent
       >
         <button
           ref={closeBtn}

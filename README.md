@@ -197,8 +197,28 @@ them, and the filmstrip alternates them with plain frames.
 desktop, a full-height sheet on mobile. Opening it from a bake pre-fills what they are
 looking for.
 
-The form asks for five things, two of them required. Nothing is sent to a server —
-there is no backend.
+It is three steps, named along the top of the panel with the thread running under them
+as far as you have got:
+
+1. **Details** — five questions, two of them required. "What are you looking for?"
+   suggests every bake on the page as you type; free text still works.
+2. **Review** — the enquiry exactly as it will arrive. *Change something* goes back
+   with everything still filled in.
+3. **Sent** — a thank-you by name and what happens next.
+
+Nothing is sent to a server — there is no backend.
+
+### Preview mode
+
+How the last step behaves is one switch, `ORDER_MODE` in `src/data/ordering.ts`:
+
+| Mode | What *Send* does |
+| --- | --- |
+| `'preview'` (now) | Plays the send out and shows the confirmation. Nothing leaves the page — no message, no Instagram, no clipboard — and the confirmation says so. |
+| `'instagram'` (launch) | Copies the enquiry and opens their Instagram DMs, then shows the confirmation with a reminder to paste and send. |
+
+The proof of concept runs in preview so the whole journey can be walked to the end
+without anyone placing a real order. Flip it to `'instagram'` to go live.
 
 **The Instagram handoff is deliberately copy-then-open.** Instagram exposes no
 supported way to pre-fill a DM body on web or in-app, so rather than rely on
@@ -212,6 +232,12 @@ The customer pastes once. The message is also shown on screen, with a separate
 **Copy enquiry** button and a direct profile link, so the flow still works if the
 clipboard API is blocked or the DM link fails to open. All of it lives in
 `lib/instagram.ts`.
+
+**The panels scroll under Lenis.** While a panel is open the page is locked with
+`lenis.stop()`, and a stopped Lenis cancels every wheel and touch-scroll event.
+The two dialogs (the order panel and the bake detail) carry `data-lenis-prevent`,
+which tells Lenis to leave events inside them alone, so they scroll natively. Any
+new scrolling overlay needs the same attribute.
 
 ---
 
@@ -285,10 +311,10 @@ src/
     sections/    Manifesto, ScrollExpand, SignatureShowcase, DepthCarousel,
                  SweetIndulgences, BakeDetail, CraftSequence, StorySection,
                  Gallery, OrderCTA
-    ordering/    OrderPanel, EnquiryForm, InstagramHandoff
+    ordering/    OrderPanel, EnquiryForm, InstagramHandoff (review), EnquirySent
     motion/      BrandThread, Swoosh, RevealText, MagneticButton
     common/      Figure, Cursor, Grain
-  data/          brand, bakes, indulgences, craft, story, socialGallery
+  data/          brand, bakes, indulgences, craft, story, socialGallery, ordering
   hooks/         useLenis, useReducedMotion
   lib/           animations, instagram, asset
   styles/        fonts, globals
