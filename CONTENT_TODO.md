@@ -7,27 +7,40 @@ This is the list of what is currently **sample copy** and what is still **missin
 
 ## 1. Photographs
 
-Nineteen photographs are in `public/images/`; fifteen are in use. The full
-inventory — what each one is and where it appears — is in
-`public/images/README.md`.
+Twenty-three photographs are in `public/images/`; nineteen are in use, four of
+them the dessert-table crops. The full inventory — what each one is and where
+it appears — is in `public/images/README.md`.
 
-The thirteen event photographs added in this revision show something the
-site did not say before: BeyondBakes does whole dessert tables, not just
-cakes. The white dessert cart is now the full-bleed reveal, and the event
-work fills the filmstrip's second row.
+The thirteen event photographs show something the site did not say before:
+BeyondBakes does whole dessert tables, not just cakes. The white dessert cart
+is the full-bleed reveal, their dessert menu has its own section, and the
+event work fills the filmstrip's second row.
 
-### Real product names, already on their menu cards
+### Sweet Indulgences — the dessert-table menu, now on the site
 
-The event photographs show BeyondBakes' own **"Sweet Indulgences"** menu:
+The event photographs show BeyondBakes' own **"Sweet Indulgences"** menu card.
+It now has its own section straight after the signatures (and a *Dessert
+table* link in the nav), in `src/data/indulgences.ts`, copied word for word:
 
-- **Cupcake Royale** — delightful vanilla cupcakes with buttercream frosting
-- **Strawberry Dream** — light and airy strawberry mousse
-- **Blueberry Bliss** — a creamy no-bake cheesecake with a burst of blueberries
-- **Chocoholic's Dream** — rich, moist chocolate cake with a rustic baked finish
+- **Cupcake Royale** — Delightful vanilla cupcakes with buttercream frosting
+- **Strawberry Dream** — Light and airy strawberry mousse, perfect for a summer day
+- **Blueberry Bliss** — A creamy no-bake cheesecake with a burst of blueberries
+- **Chocoholic's Dream** — Rich, moist chocolate cake with a rustic naked finish
 
-That is supplied, not invented, and the alt text already uses it. It is worth
-asking whether these belong on the site as a dessert-table offering alongside
-the four signature cakes.
+**A correction:** an earlier version of this note had the last line as
+"rustic *baked* finish". Read at full resolution, the card says "rustic
+*naked* finish", and the site uses the card's wording.
+
+This is supplied, not sample (`isSample: false`). Two things are still to
+confirm:
+
+- [ ] **Which photograph goes with which name.** The pairing is read from the
+      table — cupcakes, pink mousse, blueberry cheesecake glasses, chocolate
+      naked cakes — not supplied.
+- [ ] **How they are ordered.** Individually, by the box, or only as part of a
+      dessert table? The site says nothing about quantities, sizes, lead time
+      or price, because none was supplied. Each item opens the detail panel and
+      goes straight into an enquiry.
 
 ### The red-rose topper
 
@@ -67,7 +80,7 @@ not necessarily *this* kitchen's.
 
 - [ ] Detail — "Every flower, placed by hand."
 - [ ] Texture — "Buttercream combed in a single pass."
-- [ ] Time — "Rested overnight. Never rushed."
+- [ ] Time — "Set overnight. Never rushed."
 - [ ] Balance — "It should taste as good as it looks."
 - [ ] Set `CRAFT_IS_SAMPLE = false` once approved
 

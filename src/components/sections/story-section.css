@@ -1,3 +1,10 @@
+/* The portraits begin their drift from beyond the column edges. Clip on the
+   section so that never widens the page — clip, unlike hidden, creates no
+   scroll container. */
+.story {
+  overflow-x: clip;
+}
+
 .story__head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);

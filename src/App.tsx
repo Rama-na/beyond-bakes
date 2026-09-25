@@ -12,6 +12,7 @@ import { Hero } from './components/hero/Hero';
 import { Manifesto } from './components/sections/Manifesto';
 import { ScrollExpand } from './components/sections/ScrollExpand';
 import { SignatureShowcase } from './components/sections/SignatureShowcase';
+import { SweetIndulgences } from './components/sections/SweetIndulgences';
 import { BakeDetail } from './components/sections/BakeDetail';
 import { CraftSequence } from './components/sections/CraftSequence';
 import { StorySection } from './components/sections/StorySection';
@@ -40,7 +41,7 @@ export default function App() {
     setOrderOpen(true);
   }, []);
 
-  /** From a bake detail: carry the cake's name into the enquiry. */
+  /** From a bake detail: carry its name and label into the enquiry. */
   const enquireAbout = useCallback(
     (bake: Bake) => {
       setActiveBake(null);
@@ -69,6 +70,7 @@ export default function App() {
           MOVEMENT  one sentence, filled in as it is read
           WOW       the arch opens to the whole celebration
           PLAY      the signatures, turned by hand
+          PAUSE     the dessert table — four arches open once, then keep still
           SEQUENCE  the craft — four words, pinned
           INTIMATE  two friends drift together
           MOVEMENT  the wall drifts
@@ -84,6 +86,7 @@ export default function App() {
           <Manifesto />
           <ScrollExpand />
           <SignatureShowcase onOpenBake={setActiveBake} />
+          <SweetIndulgences onOpenBake={setActiveBake} />
           <CraftSequence />
           <StorySection />
           <Gallery />

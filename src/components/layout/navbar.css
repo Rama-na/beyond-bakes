@@ -64,6 +64,7 @@
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-weight: 600;
+  white-space: nowrap;
   color: var(--ink);
   /* Full-height hit area, even though the text itself is small. */
   min-height: 44px;
@@ -83,6 +84,7 @@
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-weight: 700;
+  white-space: nowrap;
   color: var(--deep-pink);
   border: 1px solid currentColor;
   border-radius: 999px;
@@ -97,6 +99,19 @@
 .nav__cta:focus-visible {
   background: var(--deep-pink);
   color: var(--background);
+}
+
+/* Four links, Instagram and the order button need about 1040px on one line
+   at this spacing; below 1100px they go into the sheet instead. */
+@media (max-width: 1280px) {
+  .nav__links {
+    gap: 1.6rem;
+  }
+
+  .nav__actions {
+    margin-left: 1.5rem;
+    gap: 1.4rem;
+  }
 }
 
 /* ---- Mobile toggle ---- */
@@ -139,7 +154,7 @@
   display: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .nav__links,
   .nav__actions {
     display: none;

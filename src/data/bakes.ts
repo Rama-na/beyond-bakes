@@ -1,6 +1,10 @@
 /**
  * The signature bakes.
  *
+ * The same model carries the dessert-table menu (./indulgences.ts), so every
+ * product on the site shares one detail panel and one enquiry path — and can
+ * move to checkout together.
+ *
  * ────────────────────────────────────────────────────────────────────
  *  SAMPLE COPY
  *
@@ -12,6 +16,8 @@
  *  No prices are set: V1 is enquiry-only by design.
  * ────────────────────────────────────────────────────────────────────
  */
+
+import { indulgences } from './indulgences';
 
 export interface BakeSize {
   label: string;
@@ -25,8 +31,13 @@ export interface Bake {
   slug: string;
   /** SAMPLE name */
   name: string;
-  /** Neutral descriptive label — safe to show before names are approved. */
+  /**
+   * The small label above the name, carried into the enquiry. A neutral
+   * description for the signatures (safe to show before names are approved);
+   * the menu's own title for the dessert table.
+   */
   referenceLabel: string;
+  /** One line. Also the photograph's alt text wherever the bake is shown. */
   shortDescription: string;
   description: string;
   images: string[];
@@ -37,9 +48,10 @@ export interface Bake {
   flavour?: string;
   /** SAMPLE — the quality detail the client specifically wanted surfaced. */
   ingredients?: string[];
-  /** SAMPLE — craft notes shown under "The details". */
+  /** SAMPLE — craft notes, kept for a future product page. Not shown at present. */
   details?: string[];
-  madeFor: string[];
+  /** Kept for filtering later. Not shown at present. */
+  madeFor?: string[];
   sizes?: BakeSize[];
   /** SAMPLE — ordering lead time */
   leadTime?: string;
@@ -193,4 +205,7 @@ export const bakes: Bake[] = [
   },
 ];
 
-export const getBakeBySlug = (slug: string) => bakes.find((b) => b.slug === slug);
+/** Everything that can be enquired about — or, later, bought. */
+export const allBakes = (): Bake[] => [...bakes, ...indulgences];
+
+export const getBakeBySlug = (slug: string) => allBakes().find((b) => b.slug === slug);

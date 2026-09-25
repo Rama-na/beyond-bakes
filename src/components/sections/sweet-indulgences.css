@@ -1,0 +1,146 @@
+/* Follows the signatures closely — the two read as one choice. */
+.sweets {
+  padding-top: clamp(2.5rem, 8vh, 6rem);
+}
+
+/* Centred and stacked, the way the menu card sets its title. */
+.sweets__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+  text-align: center;
+  margin-bottom: clamp(3rem, 7vw, 6rem);
+}
+
+.sweets__count {
+  color: var(--pink);
+}
+
+.sweets__title {
+  font-size: var(--step-display);
+}
+
+.sweets__title .reveal-line:last-child .reveal-line__inner {
+  font-style: italic;
+  color: var(--deep-rose);
+}
+
+/* ---- The table ---- */
+
+.sweets__table {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2.6vw, 3rem);
+  align-items: start;
+  max-width: 1360px;
+  margin-inline: auto;
+}
+
+.sweets__item {
+  position: relative;
+}
+
+/* Two heights, like the plinths on the real table. */
+.sweets__item:nth-child(even) {
+  margin-top: clamp(2.5rem, 7vw, 6.5rem);
+}
+
+.sweets__arch {
+  border-radius: var(--arch);
+  overflow: hidden;
+  /* Keeps the rounded clip in place while the photograph inside scales. */
+  isolation: isolate;
+  box-shadow: 0 34px 70px -52px rgba(37, 33, 36, 0.5);
+}
+
+.sweets__arch .figure {
+  transition: transform 1.4s var(--ease-expo);
+}
+
+.sweets__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+  padding-top: 1.35rem;
+}
+
+.sweets__index {
+  color: var(--pink);
+}
+
+.sweets__name {
+  font-size: clamp(1.55rem, 2.2vw, 2.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+/* Buttons reset letter-spacing, line-height, alignment and text-shadow in
+   the UA sheet; take them back from the heading so the halo still applies. */
+.sweets__open {
+  display: block;
+  min-height: 44px;
+  text-align: left;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-shadow: inherit;
+}
+
+/* The whole item — photograph, name and line — is the target. */
+.sweets__open::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--arch);
+}
+
+.sweets__open:focus-visible {
+  outline: none;
+}
+
+.sweets__open:focus-visible::after {
+  outline: 2px solid var(--deep-rose);
+  outline-offset: 8px;
+}
+
+.sweets__line {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 28ch;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sweets__item:hover .sweets__arch .figure {
+    transform: scale(1.05);
+  }
+}
+
+/* ---- Two by two ---- */
+
+@media (max-width: 900px) {
+  .sweets__table {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: clamp(2.5rem, 8vw, 4rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .sweets__table {
+    column-gap: 0.9rem;
+  }
+
+  .sweets__meta {
+    padding-top: 1rem;
+    gap: 0.3rem;
+  }
+
+  .sweets__name {
+    font-size: 1.3rem;
+  }
+
+  .sweets__line {
+    font-size: 0.8rem;
+  }
+}

@@ -37,9 +37,9 @@ export const craft = {
     {
       title: 'Time',
       line: 'Set overnight. Never rushed.',
-      image: '/images/blueberry-cheesecake-cups.jpg',
-      objectPosition: '62% 60%',
-      alt: 'Blueberry Bliss — no-bake blueberry cheesecake cups beside a vase with a pink rose',
+      image: '/images/mousse-cups-florals.jpg',
+      objectPosition: '50% 60%',
+      alt: 'Cups of strawberry mousse set out beneath a spray of flowers',
     },
     {
       title: 'Balance',

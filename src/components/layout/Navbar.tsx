@@ -6,6 +6,7 @@ import './navbar.css';
 
 const LINKS = [
   { label: 'Signatures', target: '#signatures' },
+  { label: 'Dessert table', target: '#dessert-table' },
   { label: 'The craft', target: '#craft' },
   { label: 'Our story', target: '#story' },
 ];

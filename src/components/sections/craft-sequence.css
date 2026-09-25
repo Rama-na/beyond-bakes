@@ -149,6 +149,9 @@
 
   .craft__media {
     order: -1;
+    /* An explicit width, or a start-aligned item takes its width from the
+       photograph — zero until the lazy image loads, then the page jumps. */
+    width: 100%;
     height: auto;
     aspect-ratio: 4 / 5;
     max-width: 440px;

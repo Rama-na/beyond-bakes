@@ -79,8 +79,10 @@ export const galleryRows: GalleryItem[][] = [
     },
     {
       src: '/images/mousse-cups-florals.jpg',
-      alt: 'Rows of mousse cups on a white table beneath a spray of flowers',
+      alt: "Close detail of a purple bloom, baby's breath and greenery above the dessert table",
       shape: 'arch',
+      zoom: 2.2,
+      focus: '85% 20%',
     },
     {
       src: '/images/chocolate-cupcakes-table.jpg',

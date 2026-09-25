@@ -13,7 +13,8 @@ interface BakeDetailProps {
 }
 
 /**
- * Full-screen detail panel for a signature.
+ * Full-screen detail panel for a bake — a signature or a dessert-table item.
+ * Each optional block only appears when the bake has that detail.
  *
  * Behaves as a modal dialog: it locks the page behind it, traps focus, closes
  * on Escape or backdrop click, and restores focus to whatever opened it.

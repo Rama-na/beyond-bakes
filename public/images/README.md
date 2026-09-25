@@ -11,16 +11,28 @@ dessert-cart-glasshouse.jpg   White dessert cart in the glasshouse   full-bleed 
 signature-red-rose-cake.jpg   Three tiers, red garden roses          carousel, craft (Texture), filmstrip
 garden-floral-cake.jpg        Pressed-flower tiered cake             carousel, craft (Detail), filmstrip
 floral-event-cake.jpg         Floral celebration, arched plinth      carousel, filmstrip
-blueberry-cheesecake-cups.jpg "Blueberry Bliss" cups                 craft (Time), filmstrip
+mousse-cups-florals.jpg       Mousse cups under flowers              craft (Time), filmstrip
 plated-tasting.jpg            A composed tasting plate               craft (Balance)
-strawberry-mousse-cups.jpg    "Strawberry Dream" mousse cups         filmstrip
+blueberry-cheesecake-cups.jpg Blueberry cheesecake cups              filmstrip
+strawberry-mousse-cups.jpg    Strawberry mousse cups                 filmstrip
 dessert-cart-close.jpg        The cart, closer in                    filmstrip
 cupcakes-and-buns.jpg         Chocolate cakes, edible flowers, buns  filmstrip
-mousse-cups-florals.jpg       Mousse cups under flowers              filmstrip
 chocolate-cupcakes-table.jpg  Chocolate cakes on the dessert table   filmstrip
 dessert-and-savoury-table.jpg Cupcakes and savouries                 filmstrip
 portrait-girvani.jpg          Girvani                                story, filmstrip
 portrait-swapna.jpg           Swapna                                 story, filmstrip
+```
+
+### The dessert-table menu
+
+Cut from the full-resolution originals rather than cropped in CSS, so each one
+is sharp at detail-panel size. 1200 × 1500 (4:5), the shape of their arches.
+
+```
+cupcake-royale.jpg            from dessert-and-savoury-table         Cupcake Royale
+strawberry-dream.jpg          from strawberry-mousse-cups            Strawberry Dream
+blueberry-bliss.jpg           from blueberry-cheesecake-cups         Blueberry Bliss
+chocoholics-dream.jpg         from cupcakes-and-buns                 Chocoholic's Dream
 ```
 
 ## Kept, not used
@@ -40,8 +52,8 @@ BeyondBakes' own site. Kept in case they are wanted later.
 
 1. Export at roughly 1600px on the long edge, JPEG.
 2. Drop it in this folder with a descriptive name.
-3. Reference it from `src/data/bakes.ts`, `src/data/craft.ts` or
-   `src/data/socialGallery.ts`.
+3. Reference it from `src/data/bakes.ts`, `src/data/indulgences.ts`,
+   `src/data/craft.ts` or `src/data/socialGallery.ts`.
 
 No component changes are needed. Every path resolves through `asset()`
 (`src/lib/asset.ts`), so it works on the GitHub Pages subpath.

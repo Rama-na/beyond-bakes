@@ -83,6 +83,7 @@ edit to change.
 | --- | --- |
 | `brand.ts` | Name, location, tagline, Instagram handle + URL, the manifesto line |
 | `bakes.ts` | The four signatures — names, flavours, ingredients, sizes, lead times |
+| `indulgences.ts` | The dessert-table menu, "Sweet Indulgences" — word for word from their own menu card |
 | `craft.ts` | Four steps — a word, a line and a photograph each |
 | `story.ts` | Girvani + Swapna — the headline, one sentence, the portraits |
 | `socialGallery.ts` | The filmstrip (hand-maintained, never scraped at runtime) |
@@ -129,8 +130,8 @@ driven by the GSAP ticker so Lenis and ScrollTrigger stay on the same clock. It
 is not created at all when the visitor prefers reduced motion.
 
 **GSAP + ScrollTrigger** conduct everything scroll-linked: the hero, the thread,
-the full-bleed reveal, the carousel arrangement, the portraits converging, the
-gallery drift, and the two background transitions. Shared helpers live in
+the full-bleed reveal, the carousel arrangement, the dessert table opening, the
+portraits converging, the gallery drift, and the two background transitions. Shared helpers live in
 `lib/animations.ts`; every section wraps its work in `gsap.context()` and
 reverts on unmount.
 
@@ -150,6 +151,7 @@ QUIET      hero — the arch rises out of the page, the name follows it up
 MOVEMENT   one sentence, each word filled in as it is read
 WOW        the arch opens all the way to the whole celebration
 PLAY       the signatures, turned by hand in real depth
+PAUSE      the dessert table — four arches bloom open once, then keep still
 SEQUENCE   the craft — four words, pinned, snapping step to step
 INTIMATE   two friends drift together; an ampersand settles between them
 MOVEMENT   the filmstrip drifts, faster when you scroll
@@ -168,8 +170,8 @@ than on the page, where everyone else has to scroll past it.
 Their own photography is full of arches — the plinths, the backdrops, the
 doorway behind both portraits — so it became the page's frame shape
 (`--arch` in `globals.css`). The hero opens in an arch, the full-bleed reveal
-starts as one, the portraits sit in them, and the filmstrip alternates them
-with plain frames.
+starts as one, the dessert table stands in four of them, the portraits sit in
+them, and the filmstrip alternates them with plain frames.
 
 ### Reduced motion
 
@@ -182,6 +184,7 @@ with plain frames.
 - The manifesto is simply set, not filled in word by word
 - The full-bleed reveal renders as its finished state, unpinned
 - The depth carousel becomes a plain, readable grid of labelled cards
+- The dessert-table arches are simply there; nothing blooms open
 - The craft sequence unpins and stacks its four steps
 - The portraits do not travel; the filmstrip does not drift, and renders each
   photograph once rather than as a looping strip
@@ -223,6 +226,10 @@ orderingMode: 'enquiry' | 'checkout'
 Every bake is `'enquiry'` today. Flipping a bake to `'checkout'` and populating
 `price` is the seam for adding cart → delivery → payment → confirmation later,
 without touching the brand architecture or the product UI.
+
+The dessert-table menu uses the same `Bake` model, so its four items open the
+same detail panel, seed the same enquiry, and would move to checkout the same
+way. `allBakes()` and `getBakeBySlug()` in `bakes.ts` cover both.
 
 ---
 
@@ -276,11 +283,12 @@ src/
     layout/      Navbar, Footer, Preloader
     hero/        Hero
     sections/    Manifesto, ScrollExpand, SignatureShowcase, DepthCarousel,
-                 BakeDetail, CraftSequence, StorySection, Gallery, OrderCTA
+                 SweetIndulgences, BakeDetail, CraftSequence, StorySection,
+                 Gallery, OrderCTA
     ordering/    OrderPanel, EnquiryForm, InstagramHandoff
     motion/      BrandThread, Swoosh, RevealText, MagneticButton
     common/      Figure, Cursor, Grain
-  data/          brand, bakes, craft, story, socialGallery
+  data/          brand, bakes, indulgences, craft, story, socialGallery
   hooks/         useLenis, useReducedMotion
   lib/           animations, instagram, asset
   styles/        fonts, globals
