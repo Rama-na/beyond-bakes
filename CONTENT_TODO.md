@@ -7,30 +7,27 @@ This is the list of what is currently **sample copy** and what is still **missin
 
 ## 1. Photographs
 
-All six are in `public/images/`:
+Nineteen photographs are in `public/images/`; fifteen are in use. The full
+inventory — what each one is and where it appears — is in
+`public/images/README.md`.
 
-| File | What it is | Where it appears |
-| --- | --- | --- |
-| `signature-art-cake.jpg` | Pastel palette-knife cake, cakesicles and cone | **Hero**, carousel, craft, filmstrip |
-| `floral-event-cake.jpg` | The floral celebration, white arched plinth | Full-bleed reveal, carousel, craft, filmstrip |
-| `garden-floral-cake.jpg` | Pressed-flower tiered cake, close-up | Carousel, craft, filmstrip |
-| `signature-red-rose-cake.jpg` | Three tiers, red garden roses | Carousel, craft, filmstrip |
-| `portrait-girvani.jpg` | Girvani | Story, filmstrip |
-| `portrait-swapna.jpg` | Swapna | Story, filmstrip |
+The thirteen event photographs added in this revision show something the
+site did not say before: BeyondBakes does whole dessert tables, not just
+cakes. The white dessert cart is now the full-bleed reveal, and the event
+work fills the filmstrip's second row.
 
-### More photographs are the biggest single upgrade left
+### Real product names, already on their menu cards
 
-Four cake photographs carry the whole page, so each appears three or four
-times. The filmstrip already re-crops them into close-ups to hide it, but real
-variety would lift the page more than any further design change. Adding one is
-a data change only — drop the file in `public/images/` and reference it from
-`bakes.ts`, `craft.ts` or `socialGallery.ts`. With eight or more, the filmstrip
-can take a second row drifting the other way (see the note in
-`socialGallery.ts`).
+The event photographs show BeyondBakes' own **"Sweet Indulgences"** menu:
 
-**Note:** a batch of new images was mentioned in the brief for this revision,
-but it did not arrive — nothing new reached the session or the repository.
-Resend and they will be sorted into the right places.
+- **Cupcake Royale** — delightful vanilla cupcakes with buttercream frosting
+- **Strawberry Dream** — light and airy strawberry mousse
+- **Blueberry Bliss** — a creamy no-bake cheesecake with a burst of blueberries
+- **Chocoholic's Dream** — rich, moist chocolate cake with a rustic baked finish
+
+That is supplied, not invented, and the alt text already uses it. It is worth
+asking whether these belong on the site as a dessert-table offering alongside
+the four signature cakes.
 
 ### The red-rose topper
 

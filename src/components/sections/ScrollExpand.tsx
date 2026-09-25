@@ -81,9 +81,9 @@ export function ScrollExpand() {
       <div className="expand__stage">
         <div className="expand__frame">
           <Figure
-            src="/images/floral-event-cake.jpg"
-            alt="A tiered cake on a white arched plinth inside a glasshouse, surrounded by hydrangea, roses and wildflowers"
-            objectPosition="50% 52%"
+            src="/images/dessert-cart-glasshouse.jpg"
+            alt="A white dessert cart with a scalloped canopy inside a glasshouse, set with desserts and dressed in hydrangea, roses and wildflowers"
+            objectPosition="50% 44%"
           />
           <div className="expand__veil" aria-hidden="true" />
         </div>

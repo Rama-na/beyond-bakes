@@ -67,10 +67,11 @@
   will-change: transform;
 }
 
+/* Two strips sized to sit in view together. */
 .gallery__tile {
   position: relative;
   flex: 0 0 auto;
-  height: clamp(300px, 56vh, 580px);
+  height: clamp(230px, 38vh, 430px);
   overflow: hidden;
 }
 
